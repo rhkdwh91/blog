@@ -10,7 +10,7 @@ import cors from "cors";
 // import env from "./config/env";
 import api from "./api";
 import config from "./server_config.json";
-import resolvers from "../graphql/resolvers";
+import resolvers from "./graphql/resolvers";
 import fs from "fs";
 
 //const dev:boolean = process.env.NODE_ENV !== "production";
@@ -49,10 +49,6 @@ nextApp.prepare().then(() => {
     );
     app.use("/api", api);
     
-    app.get('*', (req, res) => {
-        return handle(req, res)
-    })
-
     // ApolloServer 생성
     const server = new ApolloServer({
         typeDefs,
@@ -64,6 +60,9 @@ nextApp.prepare().then(() => {
         app,
         path: "/graphql",
     });
+    app.get('*', (req, res) => {
+        return handle(req, res)
+    })
 
     const reversePort = 3000;
     app.listen(reversePort, () => {

@@ -1,6 +1,10 @@
 type User {
-  userId: String
-  userName: String
+  uid: Int
+  email: String
+  name: String
+  isAdmin: Boolean
+  createdAt: String
+  updatedAt: String
 }
 
 type Query {

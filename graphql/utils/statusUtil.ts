@@ -5,7 +5,7 @@ const statusUtil = {
     return { code: StatusCode.OK, data: data };
   },
   false: () => {
-    return { code: StatusCode.ERORR };
+    return { code: StatusCode.ERORR, data: '' };
   },
 };
 
