@@ -1,0 +1,16 @@
+{
+    "presets": ["next/babel"],
+    "plugins": [
+        
+        [
+        "styled-components",
+        {
+            "ssr": true,
+            "preprocess": false
+            //"displayName": true, 오류로 삭제
+        },
+        "syntax-dynamic-import"
+        ]
+    ]
+}
+  
