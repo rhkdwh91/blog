@@ -37,7 +37,7 @@ export const getServerSideProps: GetServerSideProps<{}, {}> = async (ctx) => {
   await apolloClient.query({
     query: GET_USERS
   });
-  console.log('SSR---------------', apolloClient.cache.extract().ROOT_QUERY);
+  console.log('SSR---------------', ctx, apolloClient.cache.extract().ROOT_QUERY);
   return {
   props: {
     initialApolloState: apolloClient.cache.extract().ROOT_QUERY,

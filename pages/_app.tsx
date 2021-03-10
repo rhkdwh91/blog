@@ -1,7 +1,7 @@
 // import App from "next/app";
 import Head from "next/head";
 import type { AppProps } from "next/app";
-import wrapper from "../store";
+//import wrapper from "../store";
 import { ApolloProvider } from '@apollo/client';
 import { useApollo } from '../lib/apolloClient'
 import { ThemeProvider } from 'styled-components'
@@ -16,11 +16,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ApolloProvider client={apolloClient}>
         <Head>
           <title>JOSNS BLOG</title>
-          <meta
-            name="viewport"
-            content="initial-scale=1.0, width=device-width"
-          />
-          <link rel="shortcut icon" href="favicon.ico" />
         </Head>
         <ThemeProvider theme={theme}>
           <HeaderCommon />
@@ -32,4 +27,5 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default wrapper.withRedux(MyApp);
+export default MyApp;
+//export default wrapper.withRedux(MyApp);

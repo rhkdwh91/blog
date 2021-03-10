@@ -15,7 +15,6 @@ function createApolloClient() {
 }
 export function initializeApollo(initialState:any = null) {  
     const _apolloClient = apolloClient ?? createApolloClient()
-    
     // Next.js에서 Apollo Client를 이용해 데이터를 가져오는 함수가 있다면, 초기 상태값이 여기에서 합쳐진다.
     if (initialState) {
         // 클라이언트에서의 받은 데이터인 현재 캐시 데이터를 가져온다.

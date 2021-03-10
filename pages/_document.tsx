@@ -45,6 +45,11 @@ class MyDocument extends Document {
           <meta charSet="utf-8" />
           <meta httpEquiv="Pragma" content="no-cache" />
           <meta httpEquiv="Expires" content="-1" />
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+          <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <body>
