@@ -7,6 +7,29 @@ type User {
   updatedAt: String
 }
 
+type Portfolio {
+  uid: Int
+  content: String
+  image: String
+  createdAt: String
+  updatedAt: String
+}
+
+type CareersProject {
+  uid: Int
+  content: String
+  company: String
+  createdAt: String
+  updatedAt: String
+}
+
+type CareersCompany {
+  uid: Int
+  name: String
+  createdAt: String
+  updatedAt: String
+}
+
 type Query {
   users: [User]
 }
