@@ -1,5 +1,5 @@
 type User {
-  uid: Int
+  uid: Int!
   email: String
   name: String
   isAdmin: Boolean
@@ -8,7 +8,7 @@ type User {
 }
 
 type Portfolio {
-  uid: Int
+  uid: Int!
   content: String
   image: String
   createdAt: String
@@ -16,7 +16,7 @@ type Portfolio {
 }
 
 type CareersProject {
-  uid: Int
+  uid: Int!
   content: String
   company: String
   createdAt: String
@@ -24,16 +24,22 @@ type CareersProject {
 }
 
 type CareersCompany {
-  uid: Int
+  uid: Int!
   name: String
   createdAt: String
   updatedAt: String
 }
 
 type Query {
-  users: [User]
+  user(name:String): User
+  users(limit: Int, offset: Int): [User]!
+  portfolios(limit: Int, offset: Int): [Portfolio]!
+  careersProjects(limit: Int, offset: Int): [CareersProject]!
+  careersCompanys(limit: Int, offset: Int): [CareersCompany]!
 }
 
 type Mutation {
   addUser(userId: String!, userName: String!): Boolean
+  addPortfolio(content: String!, image: String!): Boolean
+  addCareersCompany(name: String!, name: String!): Boolean
 }

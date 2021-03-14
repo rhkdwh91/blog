@@ -3,7 +3,7 @@ import { ApolloClient, HttpLink, InMemoryCache, NormalizedCacheObject } from '@a
 import merge from 'deepmerge'
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
-function createApolloClient() {
+export function createApolloClient() {
     return new ApolloClient({
         ssrMode: typeof window === 'undefined',
         link: new HttpLink({
@@ -13,6 +13,18 @@ function createApolloClient() {
         cache: new InMemoryCache(),
     })
 }
+
+export const getApolloClient = () => {
+    return new ApolloClient({
+        ssrMode: true,
+        cache: new InMemoryCache(),
+        link: new HttpLink({
+            uri: `http://localhost:3000/graphql`,
+            fetch,
+        }),
+    });
+};
+
 export function initializeApollo(initialState:any = null) {  
     const _apolloClient = apolloClient ?? createApolloClient()
     // Next.js에서 Apollo Client를 이용해 데이터를 가져오는 함수가 있다면, 초기 상태값이 여기에서 합쳐진다.
@@ -29,7 +41,6 @@ export function initializeApollo(initialState:any = null) {
     if (typeof window === 'undefined') return _apolloClient
     // 클라이언트의 Apollo Client는 한 번만 생성한다.
     if (!apolloClient) apolloClient = _apolloClient
-
     return _apolloClient
 }
 

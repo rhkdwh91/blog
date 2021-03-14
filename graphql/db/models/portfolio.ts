@@ -1,11 +1,11 @@
 import statusUtil from "../../utils/statusUtil";
-const { User } = require('../../../sqlz/models/index');
+const { Portfolio } = require('../../../sqlz/models/index');
 
-const user = {
+const portfolio = {
   selectAll: async ( limit, offset ) => {
-    const result = await User.findAll({
-      offset,
-      limit
+    const result = await Portfolio.findAll({
+        offset,
+        limit
     });
     return result ? statusUtil.success(result) : statusUtil.false();
   },
@@ -18,4 +18,4 @@ const user = {
   },*/
 };
 
-export default user;
+export default portfolio;
