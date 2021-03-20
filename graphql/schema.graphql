@@ -1,8 +1,7 @@
 type User {
   uid: Int!
-  email: String
-  name: String
-  isAdmin: Boolean
+  user_id: String
+  user_name: String
   createdAt: String
   updatedAt: String
 }

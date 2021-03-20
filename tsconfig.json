@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
       "allowJs": true,
       "allowSyntheticDefaultImports": true,
       "baseUrl": ".",
@@ -33,8 +35,6 @@
       "**/*.tsx",
       "pages/document.js",
       "next.config.js",
-      "next.config.js",
-      "next.config.js"
     ],
     "exclude": [
       "node_modules"

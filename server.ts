@@ -12,6 +12,7 @@ import api from "./api";
 import config from "./server_config.json";
 import resolvers from "./graphql/resolvers";
 import fs from "fs";
+import { sequelize } from './sqlz';
 
 //const dev:boolean = process.env.NODE_ENV !== "production";
 let nextApp;
@@ -20,6 +21,7 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
 } else if (process.env.NODE_ENV === "development") {
   nextApp = next({ dev: true });
 }
+sequelize.sync({force: false});
 
 const handle = nextApp.getRequestHandler();
 // Node file system을 사용하여 gql schema 가져옴
