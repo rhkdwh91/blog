@@ -1,11 +1,9 @@
-import StatusCode from "../constants/statusCode";
-
 const statusUtil = {
-  success: (data) => {
-    return { code: StatusCode.OK, data: data };
+  success: ( data, result ) => {
+    return { code: 200, data: data, result: result };
   },
-  false: () => {
-    return { code: StatusCode.ERORR, data: '' };
+  false: ( code, data, result) => {
+    return { code: code, data: data, result: result };
   },
 };
 

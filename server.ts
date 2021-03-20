@@ -8,11 +8,9 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 // 환경변수 설정(dotenv 라이브러리 사용)
 // import env from "./config/env";
-import api from "./api";
 import config from "./server_config.json";
-import resolvers from "./graphql/resolvers";
-import fs from "fs";
 import { sequelize } from './sqlz';
+import { schema } from './graphql';
 
 //const dev:boolean = process.env.NODE_ENV !== "production";
 let nextApp;
@@ -25,9 +23,6 @@ sequelize.sync({force: false});
 
 const handle = nextApp.getRequestHandler();
 // Node file system을 사용하여 gql schema 가져옴
-const typeDefs = fs.readFileSync("graphql/schema.graphql", {
-    encoding: "utf-8",
-  });
 
 nextApp.prepare().then(() => {
     const app = express(); 
@@ -49,14 +44,13 @@ nextApp.prepare().then(() => {
         exposedHeaders: config.corsHeaders,
         })
     );
-    app.use("/api", api);
+    app.set("trust proxy", true);
     
     // ApolloServer 생성
     const server = new ApolloServer({
-        typeDefs,
-        resolvers,
-        introspection: true, // 스키마 검사 활성화 default: true
-        playground: true, // playgorund 활성화 default: true
+        schema
+        //introspection: true, // 스키마 검사 활성화 default: true
+        //playground: true, // playgorund 활성화 default: true
     });
     server.applyMiddleware({
         app,
