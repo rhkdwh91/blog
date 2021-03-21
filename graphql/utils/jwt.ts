@@ -18,15 +18,14 @@ export async function isAuthenticated (context) {
         const results = statusUtil.success(user, '로그인 성공했습니다.');
         return results;
       } else {
-        const results = statusUtil.false([], '잘못된 접근 입니다..', 400);
-        throw results;
+        throw '잘못된 접근 입니다..';
       }
     } else {
-      const results = statusUtil.false([], '로그인 해 주세요..', 400);
-      throw results;
+      throw '로그인 해 주세요..';
     }
   } catch (e) {
-    return e;
+    const results = statusUtil.false([], String(e), 400);
+    return results;
   }
 }
 
