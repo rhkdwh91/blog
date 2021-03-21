@@ -1,7 +1,13 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client'
 
 export function createApolloClient() {
-    const gql_uri = process.env.NODE_ENV === "production" ? 'https://josns.net/graphql' : 'http://localhost:3000/graphql';
+    let gql_uri = "http://localhost:3000/graphql";
+    if (process.env.NODE_ENV === "production") {
+        if (typeof window !== 'undefined') {
+            gql_uri = `https://${window.location.host}/graphql`;
+        }
+    }
+    'https://josns.net/graphql'
     return new ApolloClient({
         ssrMode: typeof window === 'undefined',
         link: new HttpLink({

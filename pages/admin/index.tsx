@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { gql, useMutation } from '@apollo/client';
 import { createApolloClient } from "../../lib/apolloClient";
-import { setToken, removeToken } from "../../lib/cookieSet";
-import useLoginCheck from "../../hooks/useLoginCheck";
+import { GetServerSideProps } from "next";
 
 const LOGIN = gql`
   mutation LogIn($user_id: String!, $password: String!) {
@@ -34,7 +33,7 @@ const GET_USER = gql`
     }
   }
 `;
-export default function Admin() {
+export default function Admin({login_check}) {
   const [ form, setForm ] = useState({
     user_id: '',
     password: ''
@@ -42,7 +41,7 @@ export default function Admin() {
   const [ LogIn,  { data: LogInData, loading: LogInLoading, error: LogInError } ] = useMutation(LOGIN);
   const [ LogOut, { data: LogOutData, loading: LogOutLoading, error: LogOutError  } ] = useMutation(LOGOUT);
   const [ searchUser, setSearchUser ] = useState("");
-  const [ isLogin ] = useLoginCheck();
+  const [ isLogin, setIsLogin ] = useState(login_check as boolean);
 
   const handleOnSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,7 +51,7 @@ export default function Admin() {
     if(LogInData !== undefined) {
       try {
         if (LogInData.login.code === 200) {
-          setToken(LogInData.login.data);        
+          setIsLogin(true);        
         } else {
           throw LogInData.login.result;
         }
@@ -71,7 +70,7 @@ export default function Admin() {
     if(LogOutData !== undefined) {
       try {
         if (LogOutData.logout.code === 200)  {
-          removeToken();
+          setIsLogin(false);
         } else {
           throw LogOutData.logout.result;
         }
@@ -132,3 +131,19 @@ export default function Admin() {
     </div>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
+  const { req } = context;
+  let login_check;
+
+  if (req.cookies && req.cookies.authtoken) {
+    login_check = true;
+  } else {
+    login_check = false;
+  }
+  return {
+    props: {
+      login_check
+    }
+  };
+}; 

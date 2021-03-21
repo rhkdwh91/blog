@@ -89,7 +89,25 @@ export const userResolver = {
         else if (password === '' || password === null || password === undefined || password === ' ') {
           throw '비밀번호를 입력해주세요'
         }
-        const results = await userCheck(user_id, password);      
+        const results = await userCheck(user_id, password);
+        const expiryDate = new Date(Date.now() + 60000 * 60 * 24 * 14 - 60000); // (2 weeks - 1 min)
+        if(results.code === 200) {
+          if (process.env.NODE_ENV === "production") {
+            context.res.cookie('authtoken', results.data, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV === 'production',
+              expires: expiryDate,
+              domain: ".josns.net"
+            });
+          } else {
+            context.res.cookie('authtoken', results.data, {
+              httpOnly: true,
+              expires: expiryDate,
+            });
+          }
+        } else {
+          throw results.result;
+        }
         return results;
       }
       catch (e) {
@@ -99,7 +117,6 @@ export const userResolver = {
     },
     loginCheck: async (_, {}, context) => {
       try {
-        console.log('RESOLVER~~~~~~~~~', context.res);
         const isUser = await isAuthenticated(context);
         if (isUser.code === 200) {
           return isUser;
@@ -113,7 +130,11 @@ export const userResolver = {
     },
     logout: async (_, {}, context) => {
       const results = statusUtil.success('', '로그아웃성공했습니다.');
-      context.res.clearCookie("authtoken");
+      if (process.env.NODE_ENV === "production") {
+        context.res.clearCookie("authtoken", { domain: ".josns.net" });
+      } else {
+        context.res.clearCookie("authtoken");
+      }
       return results;
     },
     signUp: async (_, {}, context) => {
