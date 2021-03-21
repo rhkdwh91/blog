@@ -41,7 +41,8 @@
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.5.1",
     "sequelize-typescript": "^2.1.0",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.2.1",
+    "universal-cookie": "^4.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
