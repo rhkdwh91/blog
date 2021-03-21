@@ -6,8 +6,6 @@ function HeaderCommon () {
         return (<commonStyle.MenusItem key={menu.name}>{menu.name}</commonStyle.MenusItem>);
     });
 
-    console.log(menuList);
-
     return (
         <commonStyle.HeaderWrap>
             <commonStyle.MenusWrap>

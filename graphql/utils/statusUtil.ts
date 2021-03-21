@@ -1,9 +1,9 @@
 const statusUtil = {
   success: ( data, result ) => {
-    return { code: 200, data: data, result: result };
+    return { data: data, result: result, code: 200 };
   },
-  false: ( code, data, result) => {
-    return { code: code, data: data, result: result };
+  false: ( data, result, code ) => {
+    return {  data: data, result: result, code: code };
   },
 };
 

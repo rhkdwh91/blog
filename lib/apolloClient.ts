@@ -8,7 +8,7 @@ export function createApolloClient() {
             uri: gql_uri, // 서버 URL (상대 주소가 아닌 절대 주소를 써야한다.)
             credentials: 'same-origin', // `credentials`나 `headers`같은 추가적 fetch() 옵션
         }),
-        cache: new InMemoryCache(),
+        cache: new InMemoryCache()
     })
 }
 

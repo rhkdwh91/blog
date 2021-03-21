@@ -9,7 +9,15 @@ import MainProfile from "../components/profile/MainProfile";
 const GET_USERS = gql`
   {
     users (limit: 1, offset: 0) {
-      user_id
+      data {
+        uid,
+        user_id,
+        user_name,
+        createdAt,
+        updatedAt
+      },
+      result,
+      status
     }
   }
 `;
@@ -20,8 +28,8 @@ export default function Main(props) {
   if (error) return `Error! ${error.message}`;
   return (
     <commonStyle.ContentWrap>
-      CSR: {data.users[0].user_id} <br />
-      SSR: {props.users[0].user_id}
+      CSR: {data.users.data[0].user_id} <br />
+      SSR: {props.users.data[0].user_id}
       <MainProfile></MainProfile>
     </commonStyle.ContentWrap>
   );
@@ -30,7 +38,15 @@ export default function Main(props) {
 const GET_USERS_SSR = gql`
   query GET_USERS_SSR($limit: Int!, $offset: Int!) {
     users(limit: $limit, offset: $offset) {
-      user_id
+      data {
+        uid,
+        user_id,
+        user_name,
+        createdAt,
+        updatedAt
+      },
+      result,
+      status
     }
   }
 `;

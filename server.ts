@@ -45,12 +45,19 @@ nextApp.prepare().then(() => {
         })
     );
     app.set("trust proxy", true);
-    
+    function context(ctx) {
+        return {
+          // expose the cookie helper in the GraphQL context object
+          req: ctx.req,
+          res: ctx.res
+        }
+    }
     // ApolloServer 생성
     const server = new ApolloServer({
-        schema
+        schema,
         //introspection: true, // 스키마 검사 활성화 default: true
         //playground: true, // playgorund 활성화 default: true
+        context
     });
     server.applyMiddleware({
         app,
