@@ -17,7 +17,7 @@ const GET_USERS = gql`
         updatedAt
       },
       result,
-      status
+      code
     }
   }
 `;
@@ -46,7 +46,7 @@ const GET_USERS_SSR = gql`
         updatedAt
       },
       result,
-      status
+      code
     }
   }
 `;
