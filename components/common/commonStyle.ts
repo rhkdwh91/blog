@@ -26,6 +26,11 @@ export const MenusItem = styled.li`
         border-bottom: solid 2px ${({ theme }) => theme.mainColor};
         padding: 5px;
     }
+    & a {
+        font-style: none;
+        text-decoration: none;
+        color: #222;
+    }
 `;
 
 export const FooterWrap = styled.div`

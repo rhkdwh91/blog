@@ -1,7 +1,7 @@
 [
-    { "name": "Profile" },
-    { "name": "Career" },
-    { "name": "Portfolio" },
-    { "name": "Blog / Github" },
-    { "name": "Contact" }
+    { "name": "Profile", "src": "/" },
+    { "name": "Career", "src": "/career" },
+    { "name": "Portfolio", "src": "/portfolio" },
+    { "name": "Blog / Github", "src": "/blog" },
+    { "name": "Contact", "src": "/contact" }
 ]
