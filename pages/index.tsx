@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import { getApolloClient } from '../lib/apolloClient';
 //import { END } from "redux-saga";
 //import wrapper, { SagaStore } from "../store";
-import MainProfile from "../components/profile/MainProfile";
+import MainProfile from "../components/organisms/MainProfile";
 
 const GET_USERS = gql`
   {
