@@ -1,4 +1,4 @@
-import * as commonStyle from "./commonStyle";
+import * as commonStyle from "../style/commonStyle";
 
 function FooterCommon () {
     return (

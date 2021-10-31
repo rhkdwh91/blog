@@ -2,6 +2,7 @@ import React from "react";
 import { GetServerSideProps } from "next";
 import { getApolloClient } from '../../lib/apolloClient';
 import { gql } from '@apollo/client';
+import PortfolioCard from "components/organisms/PortfolioCard";
 
 const GET_PORTFOLIOS = gql`
   query GetPortfolios($limit: Int!, $offset: Int!) {
@@ -17,17 +18,17 @@ const GET_PORTFOLIOS = gql`
 
 export default function Portfolio ({ login_check, portfolios }) {
     return (
-        <div>
-            Portfolio 페이지, {login_check}
-            {portfolios?.map((data) => {
-                return (
-                    <div key={data.uid}>
-                        {data.content}
-                        <img src={data.image} />
-                    </div>
-                )  
-            })}
-        </div>
+      <div>
+        Portfolio 페이지 
+        {login_check}
+        <ul>
+          {portfolios?.map((data) => {
+              return (
+                  <PortfolioCard key={data.id} data={data} />
+              )  
+          })}
+        </ul>
+      </div>
     );
 };
 

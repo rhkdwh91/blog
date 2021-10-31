@@ -6,9 +6,8 @@ import { ApolloProvider } from '@apollo/client';
 import { ThemeProvider } from 'styled-components'
 import theme from '../components/style/theme'
 import GlobalStyle from '../components/style/global'
-import HeaderCommon from "../components/common/HeaderCommon";
-import FooterCommon from "../components/common/FooterCommon";
 import { createApolloClient } from "../lib/apolloClient";
+import MainLayout from "../components/organisms/MainLayout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const apolloClient = createApolloClient();
@@ -18,9 +17,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           <title>JOSNS BLOG</title>
         </Head>
         <ThemeProvider theme={theme}>
-          <HeaderCommon />
-          <Component {...pageProps} />
-          <FooterCommon />
+          <MainLayout>
+            <Component {...pageProps} />
+          </MainLayout>
           <GlobalStyle />
         </ThemeProvider>
       </ApolloProvider>

@@ -1,6 +1,13 @@
 import Link from "next/link";
-import * as commonStyle from "./commonStyle"; 
-import menus from "./menus.json";
+import * as commonStyle from "../style/commonStyle"; 
+
+const menus = [
+    { "name": "Profile", "src": "/" },
+    { "name": "Career", "src": "/career" },
+    { "name": "Portfolio", "src": "/portfolio" },
+    { "name": "Blog / Github", "src": "/blog" },
+    { "name": "Contact", "src": "/contact" }
+];
 
 function HeaderCommon () {
     const menuList = menus.map((menu) => {

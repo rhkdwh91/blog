@@ -3,7 +3,6 @@ import { GetServerSideProps } from "next";
 import { getApolloClient } from '../lib/apolloClient';
 //import { END } from "redux-saga";
 //import wrapper, { SagaStore } from "../store";
-import * as commonStyle from "../components/common/commonStyle";
 import MainProfile from "../components/profile/MainProfile";
 
 const GET_USERS = gql`
@@ -27,11 +26,11 @@ export default function Main(props) {
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
   return (
-    <commonStyle.ContentWrap>
+    <div>
       CSR: {data.users.data[0].user_id} <br />
       SSR: {props.users.data[0].user_id}
       <MainProfile></MainProfile>
-    </commonStyle.ContentWrap>
+    </div>
   );
 }
 

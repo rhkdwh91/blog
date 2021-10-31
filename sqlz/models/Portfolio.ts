@@ -18,10 +18,10 @@ export class Portfolio extends Model<Portfolio> {
   image!: string;
 
   @CreatedAt
-  @Column(DataType.TIME)
+  @Column(DataType.DATE)
   createdAt?: Date;
 
   @UpdatedAt
-  @Column(DataType.TIME)
+  @Column(DataType.DATE)
   updatedAt?: Date;
 }
