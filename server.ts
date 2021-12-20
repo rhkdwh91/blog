@@ -63,7 +63,7 @@ nextApp.prepare().then(() => {
         app,
         path: "/graphql",
     });
-    app.get('*', (req, res) => {
+    app.all('*', (req, res) => {
         return handle(req, res)
     })
 

@@ -1,45 +1,45 @@
 {
-    "compilerOptions": {
-      "experimentalDecorators": true,
-      "emitDecoratorMetadata": true,
-      "allowJs": true,
-      "allowSyntheticDefaultImports": true,
-      "baseUrl": ".",
-      "rootDir": ".",
-      "jsx": "preserve",
-      "lib": [
-        "dom",
-        "es2019"
-      ],
-      "module": "commonjs",
-      "moduleResolution": "node",
-      "noEmit": true,
-      "noUnusedLocals": true,
-      "noImplicitAny": false,
-      // "noUnusedParameters": true,
-      "preserveConstEnums": true,
-      "pretty": true,
-      "removeComments": false,
-      "skipLibCheck": true,
-      "sourceMap": true,
-      "strict": true,
-      "target": "es2019", //이거 중요함 esnext로 박혀있는거 바꿔주자...
-      "forceConsistentCasingInFileNames": true,
-      "esModuleInterop": true,
-      "resolveJsonModule": true,
-      "isolatedModules": true
-    },
-    "include": [
-      "next-env.d.ts",
-      "**/*.ts",
-      "**/*.tsx",
-      "pages/document.js",
-      "next.config.js",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "rootDir": ".",
+    "jsx": "preserve",
+    "lib": [
+      "dom",
+      "es2019"
     ],
-    "exclude": [
-      "node_modules"
-    ],
-    "experimentalDecorators": true,    
-    "emitDecoratorMetadata": true, 
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "noUnusedLocals": true,
+    "noImplicitAny": false,
+    // "noUnusedParameters": true,
+    "preserveConstEnums": true,
+    "pretty": true,
+    "removeComments": false,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2019", //이거 중요함 esnext로 박혀있는거 바꿔주자...
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "pages/document.js",
+    "next.config.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "experimentalDecorators": true,
+  "emitDecoratorMetadata": true
 }
-  
