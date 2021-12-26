@@ -125,6 +125,7 @@ export default function Admin({login_check}) {
             { searchUser }
             <input name="user_id" value={form.user_id}  onChange={handleOnChange} type="text" placeholder="ID를 입력해주세요"></input><br />
             <button onClick={handleOnSearch}>검색</button>
+            <input name="carerrs" />
           </>
         }      
       </form>
