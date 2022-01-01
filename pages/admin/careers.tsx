@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { gql } from '@apollo/client';
 import { getApolloClient } from '../../lib/apolloClient';
 import { GetServerSideProps } from "next";
