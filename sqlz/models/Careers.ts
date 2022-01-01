@@ -25,11 +25,11 @@ export class Careers extends Model<Careers> {
   @Column(DataType.STRING)
   startDate!: string;
 
-  @AllowNull(false)
+  @AllowNull(true)
   @Column(DataType.STRING)
   endYear!: string;
 
-  @AllowNull(false)
+  @AllowNull(true)
   @Column(DataType.STRING)
   endDate!: string;
 

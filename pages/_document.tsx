@@ -8,9 +8,7 @@ import Document, {
 import { ServerStyleSheet } from "styled-components";
 
 class MyDocument extends Document {
-
   static async getInitialProps(ctx: DocumentContext) {
-
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
     try {
@@ -49,7 +47,10 @@ class MyDocument extends Document {
             name="viewport"
             content="initial-scale=1.0, width=device-width"
           />
-          <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet" />
+          <link
+            href="https://fonts.googleapis.com/earlyaccess/notosanskr.css"
+            rel="stylesheet"
+          />
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <body>
