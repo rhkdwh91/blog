@@ -41,6 +41,7 @@
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.5.1",
     "sequelize-typescript": "^2.1.0",
+    "sqlite3": "^5.0.2",
     "styled-components": "^5.2.1",
     "universal-cookie": "^4.0.4"
   },
