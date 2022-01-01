@@ -28,5 +28,5 @@ export const careersResolver = {
         });
         return result;
         }
-    }
+    } 
 };

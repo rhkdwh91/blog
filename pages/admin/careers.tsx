@@ -1,23 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { gql } from '@apollo/client';
-import { getApolloClient } from '../../lib/apolloClient';
+import React from "react";
+import { getApolloClient } from 'lib/apolloClient';
 import { GetServerSideProps } from "next";
-
-const GET_CAREERS = gql`
-  query GetCareers($limit: Int!, $offset: Int!) {
-    careers(limit: $limit, offset: $offset) {
-        uid,
-        companyName,
-        companyProject,
-        startYear,
-        startDate,
-        endYear,
-        endDate,
-        createdAt,
-        updatedAt,
-    }
-  }
-`;
+import { GET_CAREERS } from "hooks/useCareersQuery";
 
 export default function Careers (props) {
   if (props?.login_check) {
