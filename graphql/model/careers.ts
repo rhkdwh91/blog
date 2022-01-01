@@ -16,6 +16,9 @@ export const careersSchema = gql`
     extend type Query {
         careers(limit: Int, offset: Int): [Career]!
     }
+    extend type Mutation {
+        careerCreate(companyName: String, companyProject: String, startYear: String, startDate: String, endYear: String, endDate: String): String
+    }
 `;
 
 export const careersResolver = {
@@ -28,5 +31,26 @@ export const careersResolver = {
         });
         return result;
         }
+    },
+    Mutation: {
+        careerCreate: async ( _, payload) => {
+            try{
+                const result = await Careers.create(payload)
+                .catch(function (err) {
+                    const isSequelizeValidateError = err.name === "SequelizeValidationError" || err.name === "SequelizeUniqueConstraintError";
+                    if (isSequelizeValidateError) {
+                        console.log(err);
+                        throw 'sequelize 에러입니다.';
+                    }
+                });
+                if (result) {
+                    return "성공";
+                } else {
+                    throw "sequelize 에러입니다.";
+                } 
+            } catch (err) {
+                return err;
+            }
+        },
     }
 };

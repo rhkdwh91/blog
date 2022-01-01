@@ -1,21 +1,21 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql, useQuery } from "@apollo/client";
 import { GetServerSideProps } from "next";
-import { getApolloClient } from '../lib/apolloClient';
+import { getApolloClient } from "../lib/apolloClient";
 //import { END } from "redux-saga";
 //import wrapper, { SagaStore } from "../store";
 import MainProfile from "../components/organisms/MainProfile";
 
 const GET_USERS = gql`
   {
-    users (limit: 1, offset: 0) {
+    users(limit: 1, offset: 0) {
       data {
-        uid,
-        user_id,
-        user_name,
-        createdAt,
+        uid
+        user_id
+        user_name
+        createdAt
         updatedAt
-      },
-      result,
+      }
+      result
       code
     }
   }
@@ -23,7 +23,7 @@ const GET_USERS = gql`
 
 export default function Main(props) {
   const { loading, error, data } = useQuery(GET_USERS);
-  if (loading) return 'Loading...';
+  if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
   return (
     <div>
@@ -38,13 +38,13 @@ const GET_USERS_SSR = gql`
   query GET_USERS_SSR($limit: Int!, $offset: Int!) {
     users(limit: $limit, offset: $offset) {
       data {
-        uid,
-        user_id,
-        user_name,
-        createdAt,
+        uid
+        user_id
+        user_name
+        createdAt
         updatedAt
-      },
-      result,
+      }
+      result
       code
     }
   }
@@ -61,13 +61,13 @@ export const getServerSideProps: GetServerSideProps<{}, {}> = async (ctx) => {
     query: GET_USERS_SSR,
     variables: { limit: 1, offset: 0 },
   });
-  const users =  data.users;
+  const users = data.users;
   return {
-  props: {
-    users,
-  },
-  }
-}
+    props: {
+      users,
+    },
+  };
+};
 
 /*
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
