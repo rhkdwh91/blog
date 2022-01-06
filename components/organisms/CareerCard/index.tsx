@@ -2,8 +2,8 @@ import * as Styled from "./styled";
 
 interface ICareerCardProps {
   data: CareerQueryType;
-  clickHandleEdit: (payload: CareerUidType) => Promise<void>;
-  clickHandleDelete: (uid: number) => Promise<void>;
+  clickHandleEdit?: (payload: CareerUidType) => Promise<void>;
+  clickHandleDelete?: (uid: number) => Promise<void>;
 }
 
 function CareerCard({ data, clickHandleDelete }: ICareerCardProps) {
@@ -11,7 +11,7 @@ function CareerCard({ data, clickHandleDelete }: ICareerCardProps) {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    clickHandleDelete(data.uid);
+    if (clickHandleDelete) clickHandleDelete(data.uid);
   };
 
   return (
@@ -19,7 +19,9 @@ function CareerCard({ data, clickHandleDelete }: ICareerCardProps) {
       <p>{data.companyName}</p>
       <p>{data.companyProject}</p>
       <p>
-        <button onClick={handleClickDeleteButton}>삭제</button>
+        {clickHandleDelete && (
+          <button onClick={handleClickDeleteButton}>삭제</button>
+        )}
       </p>
     </Styled.Card>
   );

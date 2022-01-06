@@ -3,9 +3,9 @@ import * as commonStyle from "../style/commonStyle";
 
 const menus = [
   { name: "Profile", src: "/" },
-  { name: "Career", src: "/career" },
+  { name: "Careers", src: "/careers" },
   { name: "Portfolio", src: "/portfolio" },
-  { name: "Blog / Github", src: "/blog" },
+  { name: "Board", src: "/board" },
   { name: "Contact", src: "/contact" },
 ];
 
