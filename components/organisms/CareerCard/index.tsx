@@ -1,14 +1,26 @@
 import * as Styled from "./styled";
 
 interface ICareerCardProps {
-  data: CarrerType;
+  data: CareerQueryType;
+  clickHandleEdit: (payload: CareerUidType) => Promise<void>;
+  clickHandleDelete: (uid: number) => Promise<void>;
 }
 
-function CareerCard({ data }: ICareerCardProps) {
+function CareerCard({ data, clickHandleDelete }: ICareerCardProps) {
+  const handleClickDeleteButton = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    clickHandleDelete(data.uid);
+  };
+
   return (
     <Styled.Card>
       <p>{data.companyName}</p>
       <p>{data.companyProject}</p>
+      <p>
+        <button onClick={handleClickDeleteButton}>삭제</button>
+      </p>
     </Styled.Card>
   );
 }

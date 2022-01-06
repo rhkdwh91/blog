@@ -13,25 +13,25 @@ export class Careers extends Model<Careers> {
   @Column(DataType.STRING)
   companyName!: string;
  
-  @AllowNull(false)
+  @AllowNull(true)
   @Column(DataType.STRING)
-  companyProject!: string;
-
-  @AllowNull(false)
-  @Column(DataType.STRING)
-  startYear!: string;
-
-  @AllowNull(false)
-  @Column(DataType.STRING)
-  startDate!: string;
+  companyProject?: string;
 
   @AllowNull(true)
   @Column(DataType.STRING)
-  endYear!: string;
+  startYear?: string;
 
   @AllowNull(true)
   @Column(DataType.STRING)
-  endDate!: string;
+  startDate?: string;
+
+  @AllowNull(true)
+  @Column(DataType.STRING)
+  endYear?: string;
+
+  @AllowNull(true)
+  @Column(DataType.STRING)
+  endDate?: string;
 
   @CreatedAt
   @Column(DataType.DATE)
