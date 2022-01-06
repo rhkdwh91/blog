@@ -1,7 +1,17 @@
 //import { BelongsToMany, Column, CreatedAt, Model, Scopes, Table, UpdatedAt } from 'sequelize-typescript';
-import { Column, CreatedAt, Model, UpdatedAt, DataType, PrimaryKey, AllowNull, Table, AutoIncrement } from 'sequelize-typescript';
+import {
+  Column,
+  CreatedAt,
+  Model,
+  UpdatedAt,
+  DataType,
+  PrimaryKey,
+  AllowNull,
+  Table,
+  AutoIncrement,
+} from "sequelize-typescript";
 
-@Table({tableName: 'portfolio', timestamps: true}) 
+@Table({ tableName: "portfolio", timestamps: true })
 export class Portfolio extends Model<Portfolio> {
   @PrimaryKey
   @AllowNull(false)
@@ -12,7 +22,7 @@ export class Portfolio extends Model<Portfolio> {
   @AllowNull(false)
   @Column(DataType.STRING)
   content!: string;
- 
+
   @AllowNull(false)
   @Column(DataType.STRING)
   image!: string;

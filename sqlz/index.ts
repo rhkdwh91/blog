@@ -1,4 +1,4 @@
-import { Sequelize } from 'sequelize-typescript';
+import { Sequelize } from "sequelize-typescript";
 const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/config/config.js")[env];
 
@@ -17,8 +17,8 @@ export const sequelize = new Sequelize({
 export const sequelize = new Sequelize({
   database: config.database,
   pool: config.pool,
-  dialect: 'sqlite',
+  dialect: "sqlite",
   //storage:'official_website.db',
-  storage:'./sqlz/config/blog.db',
-  models: [__dirname + '/models']
+  storage: "./sqlz/config/blog.db",
+  models: [__dirname + "/models"],
 });

@@ -10,9 +10,7 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
   return (
     <>
       <HeaderCommon />
-        <commonStyle.ContentWrap>
-          { children }
-        </commonStyle.ContentWrap>
+      <commonStyle.ContentWrap>{children}</commonStyle.ContentWrap>
       <FooterCommon />
     </>
   );
