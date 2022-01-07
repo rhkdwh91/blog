@@ -113,7 +113,7 @@ export const userResolver = {
               httpOnly: true,
               secure: process.env.NODE_ENV === "production",
               expires: expiryDate,
-              domain: ".josns.net",
+              domain: ".josns.pe.kr",
             });
           } else {
             context.res.cookie("authtoken", results.data, {
@@ -146,7 +146,7 @@ export const userResolver = {
     logout: async (_, {}, context) => {
       const results = statusUtil.success("", "로그아웃성공했습니다.");
       if (process.env.NODE_ENV === "production") {
-        context.res.clearCookie("authtoken", { domain: ".josns.net" });
+        context.res.clearCookie("authtoken", { domain: ".josns.pe.kr" });
       } else {
         context.res.clearCookie("authtoken");
       }
