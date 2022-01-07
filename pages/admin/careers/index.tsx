@@ -5,7 +5,7 @@ import { GetServerSideProps } from "next";
 import { useCareersQuery } from "hooks/useCareersQuery";
 import CareerCard from "components/organisms/CareerCard";
 import CareerAddCard from "components/organisms/CareerAddCard";
-import * as Styled from "./styled";
+import * as Styled from "components/style/styled";
 
 export default function Careers(props) {
   if (props?.login_check) {
