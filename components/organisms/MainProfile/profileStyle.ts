@@ -1,22 +1,41 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const ImageCard = styled.div`
-    width: 40%;  
-    ${({ theme })=> theme.defaultCard}
+  ${({ theme }) => css`
+    width: 40%;
+    ${theme.defaultCard}
+    ${theme.laptopSize} {
+      width: auto;
+      padding: 20px;
+      margin: 10px 0;
+    }
+  `}
 `;
 
 export const ContentCard = styled.div`
+  ${({ theme }) => css`
     width: 60%;
-    ${({ theme })=> theme.defaultCard}
+    ${theme.defaultCard}
+    ${theme.laptopSize} {
+      width: auto;
+      padding: 20px;
+      margin: 10px 0;
+    }
+  `}
 `;
 
 export const ContentText = styled.div`
-    display:inline-block;
-    width: 100%;
-    text-align:center;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
 `;
 
 export const CardWrap = styled.div`
-    display:flex;
-    ${({ theme }) => theme.flexCardWrap}
+  ${({ theme }) => css`
+    display: flex;
+    ${theme.flexCardWrap}
+    ${theme.laptopSize} {
+      display: block;
+    }
+  `}
 `;
