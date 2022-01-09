@@ -8,4 +8,24 @@ export const Card = styled.div`
   &:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   }
+  > p {
+    margin: 10px 0;
+    color: #595959;
+  }
+  > .career-card-name {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  > .carrer-card-project {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  & button {
+    margin: 10px 5px;
+  }
+`;
+
+export const Date = styled.p`
+  font-size: 14px;
+  color: #ddd;
 `;

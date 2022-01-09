@@ -1,6 +1,6 @@
 import { useCareersQuery } from "hooks/useCareersQuery";
 import CareerCard from "components/organisms/CareerCard";
-import * as Styled from "components/style/styled";
+import * as Styled from "components/style/commonStyle";
 
 function Careers() {
   const { careersData, careersLoading } = useCareersQuery();

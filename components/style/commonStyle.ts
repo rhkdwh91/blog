@@ -45,3 +45,14 @@ export const ContentWrap = styled.div`
   padding: 20px 0;
   text-align: center;
 `;
+
+export const CardList = styled.div`
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  padding: 100px 0 200px 0;
+  > div {
+    width: calc(25% - 40px);
+    margin: 10px;
+  }
+`;

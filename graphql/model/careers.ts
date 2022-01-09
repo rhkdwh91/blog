@@ -54,7 +54,6 @@ export const careersResolver = {
   Mutation: {
     careerCreate: async (_, payload) => {
       try {
-        console.log(payload);
         const result = await Careers.create(payload).catch(function (err) {
           console.log(err);
           const isSequelizeValidateError =
@@ -64,28 +63,23 @@ export const careersResolver = {
             throw "sequelize 에러입니다.";
           }
         });
-        console.log(result);
         if (result) {
           return "성공";
         } else {
           throw "sequelize 에러입니다.";
         }
       } catch (err) {
+        console.error(err);
         return err;
       }
     },
     careerEdit: async (_, payload) => {
       try {
-        const { uid, companyName, companyProject, startYear, startDate } =
-          payload;
-        const result = await Careers.update(
-          { companyName, companyProject, startYear, startDate },
-          {
-            where: {
-              uid,
-            },
-          }
-        ).catch(function (err) {
+        const result = await Careers.update(payload, {
+          where: {
+            uid: payload.uid,
+          },
+        }).catch(function (err) {
           const isSequelizeValidateError =
             err.name === "SequelizeValidationError" ||
             err.name === "SequelizeUniqueConstraintError";
@@ -99,6 +93,7 @@ export const careersResolver = {
           throw "sequelize 에러입니다.";
         }
       } catch (err) {
+        console.error(err);
         return err;
       }
     },
@@ -120,6 +115,7 @@ export const careersResolver = {
           throw "sequelize 에러입니다.";
         }
       } catch (err) {
+        console.error(err);
         return err;
       }
     },

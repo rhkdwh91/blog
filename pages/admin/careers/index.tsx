@@ -5,28 +5,28 @@ import { GetServerSideProps } from "next";
 import { useCareersQuery } from "hooks/useCareersQuery";
 import CareerCard from "components/organisms/CareerCard";
 import CareerAddCard from "components/organisms/CareerAddCard";
-import * as Styled from "components/style/styled";
+import * as Styled from "components/style/commonStyle";
 
 export default function Careers(props) {
   if (props?.login_check) {
     const {
       careersData,
       careersLoading,
-      clickHandleCreate,
-      clickHandleEdit,
-      clickHandleDelete,
+      careerCreate,
+      careerEdit,
+      careerDelete,
     } = useCareersQuery();
     return (
       <div>
-        <CareerAddCard clickHandleCreate={clickHandleCreate} />
+        <CareerAddCard careerCreate={careerCreate} />
         <Styled.CardList>
           {!careersLoading &&
             careersData?.careers?.map((data) => (
               <CareerCard
                 key={data.uid}
                 data={data}
-                clickHandleEdit={clickHandleEdit}
-                clickHandleDelete={clickHandleDelete}
+                careerEdit={careerEdit}
+                careerDelete={careerDelete}
               />
             ))}
         </Styled.CardList>

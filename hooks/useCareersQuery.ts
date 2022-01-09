@@ -82,7 +82,7 @@ export const useCareersQuery = () => {
   const [CareerEdit, { loading: editLoading, error: editError }] =
     useMutation(CAREER_EDIT);
 
-  const clickHandleCreate = async (payload: CareerType) => {
+  const careerCreate = async (payload: CareerType) => {
     try {
       const { data } = await CareerCreate({
         variables: {
@@ -104,7 +104,7 @@ export const useCareersQuery = () => {
     }
   };
 
-  const clickHandleEdit = async (payload: CareerUidType) => {
+  const careerEdit = async (payload: CareerUidType) => {
     try {
       const { data } = await CareerEdit({
         variables: {
@@ -126,7 +126,7 @@ export const useCareersQuery = () => {
     }
   };
 
-  const clickHandleDelete = async (uid: number) => {
+  const careerDelete = async (uid: number) => {
     try {
       if (!confirm("삭제하겠습니까?")) {
         return;
@@ -151,8 +151,8 @@ export const useCareersQuery = () => {
     careersData,
     careersLoading,
     careersRefetch,
-    clickHandleCreate,
-    clickHandleEdit,
-    clickHandleDelete,
+    careerCreate,
+    careerEdit,
+    careerDelete,
   };
 };

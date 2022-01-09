@@ -1,54 +1,32 @@
 import { useState, useCallback } from "react";
+import useForm from "hooks/useForm";
 import * as Styled from "./styled";
 
 interface ICareerCardProps {
-  clickHandleCreate: (payload: CareerType) => Promise<void>;
+  careerCreate: (payload: CareerType) => Promise<void>;
 }
 
-function CareerCard({ clickHandleCreate }: ICareerCardProps) {
+function CareerCard({ careerCreate }: ICareerCardProps) {
   const [addLayerOn, setAddLayerOn] = useState<boolean>(false);
-  const [form, setForm] = useState<CareerType>({
+  const [form, { onChange, reset }] = useForm({
     companyName: "",
     companyProject: "",
     startYear: "",
     startDate: "",
     endYear: "",
     endDate: "",
-  });
-
-  const clickHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.currentTarget;
-
-    setForm({
-      ...form,
-      [name]: value,
-    });
-  };
+  } as CareerType);
 
   const handleClickCreateButton = useCallback(() => {
-    clickHandleCreate(form);
+    careerCreate(form);
     setAddLayerOn(false);
-    setForm({
-      companyName: "",
-      companyProject: "",
-      startYear: "",
-      startDate: "",
-      endYear: "",
-      endDate: "",
-    });
+    reset();
   }, [form]);
 
   const handleClickLayerButton = useCallback(
     (value: boolean) => () => {
       setAddLayerOn(value);
-      setForm({
-        companyName: "",
-        companyProject: "",
-        startYear: "",
-        startDate: "",
-        endYear: "",
-        endDate: "",
-      });
+      reset();
     },
     [form]
   );
@@ -66,7 +44,7 @@ function CareerCard({ clickHandleCreate }: ICareerCardProps) {
               placeholder="회사이름"
               name="companyName"
               value={form.companyName}
-              onChange={clickHandleChange}
+              onChange={onChange}
             />
           </p>
           <p>
@@ -75,7 +53,7 @@ function CareerCard({ clickHandleCreate }: ICareerCardProps) {
               placeholder="경력내용"
               name="companyProject"
               value={form.companyProject}
-              onChange={clickHandleChange}
+              onChange={onChange}
             />
           </p>
           <p>
@@ -84,7 +62,7 @@ function CareerCard({ clickHandleCreate }: ICareerCardProps) {
               placeholder="시작년도"
               name="startYear"
               value={form.startYear}
-              onChange={clickHandleChange}
+              onChange={onChange}
               maxLength={4}
             />
           </p>
@@ -94,7 +72,7 @@ function CareerCard({ clickHandleCreate }: ICareerCardProps) {
               placeholder="시작월일"
               name="startDate"
               value={form.startDate}
-              onChange={clickHandleChange}
+              onChange={onChange}
               maxLength={4}
             />
           </p>
@@ -104,7 +82,7 @@ function CareerCard({ clickHandleCreate }: ICareerCardProps) {
               placeholder="종료년도"
               name="endYear"
               value={form.endYear}
-              onChange={clickHandleChange}
+              onChange={onChange}
               maxLength={4}
             />
           </p>
@@ -114,7 +92,7 @@ function CareerCard({ clickHandleCreate }: ICareerCardProps) {
               placeholder="종료월일"
               name="endDate"
               value={form.endDate}
-              onChange={clickHandleChange}
+              onChange={onChange}
               maxLength={4}
             />
           </p>
