@@ -2,7 +2,7 @@ import { Sequelize } from "sequelize-typescript";
 const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/config/config.js")[env];
 
-/*
+/***
 export const sequelize = new Sequelize({
   database: config.database,
   username: config.username,
@@ -13,7 +13,7 @@ export const sequelize = new Sequelize({
   pool: config.pool,
   models: [__dirname + '/models']
 });
-*/
+***/
 const storage =
   env === "production" ? "../sqlite/blog.db" : "./sqlz/config/blog.db";
 export const sequelize = new Sequelize({
