@@ -14,11 +14,13 @@ export const sequelize = new Sequelize({
   models: [__dirname + '/models']
 });
 */
+const storage =
+  env === "production" ? "../../sqlite/blog.db" : "./sqlz/config/blog.db";
 export const sequelize = new Sequelize({
   database: config.database,
   pool: config.pool,
   dialect: "sqlite",
   //storage:'official_website.db',
-  storage: "./sqlz/config/blog.db",
+  storage,
   models: [__dirname + "/models"],
 });

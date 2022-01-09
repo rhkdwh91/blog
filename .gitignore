@@ -1,4 +1,4 @@
 node_modules
 .next
-sqlz/config/
+sqlz/config/blog.db
 .history
