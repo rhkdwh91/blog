@@ -15,7 +15,7 @@ export const sequelize = new Sequelize({
 });
 */
 const storage =
-  env === "production" ? "../../sqlite/blog.db" : "./sqlz/config/blog.db";
+  env === "production" ? "../sqlite/blog.db" : "./sqlz/config/blog.db";
 export const sequelize = new Sequelize({
   database: config.database,
   pool: config.pool,
