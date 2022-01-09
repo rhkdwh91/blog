@@ -28,7 +28,8 @@ export default function Main(props) {
   return (
     <div>
       CSR: {data.users.data[0].user_id} <br />
-      SSR: {props.users.data[0].user_id}
+      SSR: {props.users.data[0].user_id} <br />
+      <br />이 게시판은 Next.js, GraphQL. Sequelize, SQLite 로 만들어졌습니다.
       <MainProfile></MainProfile>
     </div>
   );
