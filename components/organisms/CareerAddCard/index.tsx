@@ -48,8 +48,7 @@ function CareerCard({ careerCreate }: ICareerCardProps) {
             />
           </p>
           <p>
-            <input
-              type="string"
+            <textarea
               placeholder="경력내용"
               name="companyProject"
               value={form.companyProject}

@@ -11,6 +11,7 @@ export const Card = styled.div`
   > p {
     margin: 10px 0;
     color: #595959;
+    white-space: pre-line;
   }
   > .career-card-name {
     font-size: 14px;
