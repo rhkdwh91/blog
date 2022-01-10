@@ -18,8 +18,9 @@ export const Card = styled.div`
     font-weight: 500;
   }
   > .carrer-card-project {
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
   }
   & button {
     margin: 10px 5px;
