@@ -77,7 +77,7 @@ export const CardList = styled.div`
     flex-wrap: wrap;
     padding: 100px 0 200px 0;
     > div {
-      width: calc(33% - 36px);
+      width: calc(33% - 56px);
       margin: 10px;
     }
     ${theme.laptopSize} {
