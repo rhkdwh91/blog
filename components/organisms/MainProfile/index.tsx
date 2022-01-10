@@ -4,7 +4,7 @@ function MainProfile() {
   return (
     <profileStyle.CardWrap>
       <profileStyle.ImageCard>
-        <img src="/images/main.svg" width="100%" />
+        <img src="/images/my_charactor.png" width="100%" />
       </profileStyle.ImageCard>
       <profileStyle.ContentCard>
         <profileStyle.ContentText>
