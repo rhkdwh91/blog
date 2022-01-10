@@ -75,7 +75,7 @@ export const CardList = styled.div`
     display: flex;
     width: 100%;
     flex-wrap: wrap;
-    padding: 100px 0 200px 0;
+    padding: 40px 0 100px 0;
     > div {
       width: calc(33% - 56px);
       margin: 10px;
