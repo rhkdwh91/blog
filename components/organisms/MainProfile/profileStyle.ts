@@ -3,6 +3,9 @@ import styled, { css } from "styled-components";
 export const ImageCard = styled.div`
   ${({ theme }) => css`
     width: 40%;
+    > img {
+      margin: 0 auto;
+    }
     ${theme.defaultCard}
     ${theme.laptopSize} {
       width: auto;
