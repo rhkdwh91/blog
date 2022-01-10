@@ -58,8 +58,6 @@ function CareerCard({ data, careerEdit, careerDelete }: ICareerCardProps) {
     <Styled.Card>
       {editMode ? (
         <>
-          <p className="career-card-name">{data.companyName}</p>
-          <p className="carrer-card-project">{data.companyProject}</p>
           <p>
             <input
               type="string"

@@ -12,6 +12,14 @@ export const Card = styled.div`
     margin: 10px 0;
     color: #595959;
     white-space: pre-line;
+    > textarea {
+      width: 100%;
+      height: 250px;
+    }
+    > input {
+      width: 100%;
+      height: 20px;
+    }
   }
   > .career-card-name {
     font-size: 14px;
