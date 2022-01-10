@@ -11,7 +11,7 @@ export const Card = styled.div`
   > p {
     margin: 10px 0;
     color: #595959;
-    white-space: pre-line;
+    white-space: pre-wrap;
     > textarea {
       width: 100%;
       height: 250px;
