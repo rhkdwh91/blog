@@ -15,3 +15,18 @@ declare type CareerQueryType = CareerUidType & {
   createdAt?: string;
   updatedAt?: string;
 };
+
+declare type BoardType = {
+  title?: string;
+  content?: string;
+  userName?: string;
+};
+
+declare type BoardUidType = BoardType & {
+  uid: number;
+};
+
+declare type BoardQueryType = BoardUidType & {
+  createAt?: string;
+  updatedAt?: string;
+};

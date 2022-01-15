@@ -8,6 +8,7 @@ import theme from "../components/style/theme";
 import GlobalStyle from "../components/style/global";
 import { createApolloClient } from "../lib/apolloClient";
 import MainLayout from "../components/organisms/MainLayout";
+import wrapper from "store";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const apolloClient = createApolloClient();
@@ -26,5 +27,5 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);
 //export default wrapper.withRedux(MyApp);
