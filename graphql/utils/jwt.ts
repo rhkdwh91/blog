@@ -15,16 +15,25 @@ export async function isAuthenticated(context) {
       const decoded = jwt.verify(authtoken, secret);
       const user = await User.findOne({ where: { user_id: decoded.user_id } });
       if (user !== null) {
-        const results = statusUtil.success(user, "로그인 성공했습니다.");
+        const results = statusUtil.success(
+          {
+            uid: user.uid,
+            user_id: user.user_id,
+            user_name: user.user_name,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
+          },
+          "로그인 성공했습니다."
+        );
         return results;
       } else {
         throw "잘못된 접근 입니다..";
       }
     } else {
-      throw "로그인 해 주세요..";
+      throw "로그인 해 주세요.";
     }
   } catch (e) {
-    const results = statusUtil.false([], String(e), 400);
+    const results = statusUtil.false({}, String(e), 400);
     return results;
   }
 }

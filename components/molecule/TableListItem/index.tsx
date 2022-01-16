@@ -7,12 +7,12 @@ interface ITableListItemProps {
 
 export default function TableListItem({ data }: ITableListItemProps) {
   return (
-    <Link href={`/board/read/${data.uid}`}>
+    <Link href={`/posts/read/${data.uid}`}>
       <Styled.ListItem>
-        <span className="board_list_id">{data?.uid}</span>
-        <span className="board_list_title">{data?.title}</span>
-        <span className="board_list_username">{data?.userName}</span>
-        <span className="board_list_time">
+        <span className="table_list_id">{data?.uid}</span>
+        <span className="table_list_title">{data?.title}</span>
+        <span className="table_list_username">{data?.userName}</span>
+        <span className="table_list_time">
           {data?.updatedAt?.split(" ")[0] || data?.createAt?.split(" ")[0]}
         </span>
       </Styled.ListItem>

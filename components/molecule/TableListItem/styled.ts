@@ -8,16 +8,16 @@ export const ListItem = styled.div`
   cursor: pointer;
   background-color: #fff;
   justify-content: space-between;
-  > .board_list_id {
+  > .table_list_id {
     width: 10%;
   }
-  > .board_list_title {
+  > .table_list_title {
     width: 50%;
   }
-  > .board_list_username {
+  > .table_list_username {
     width: 10%;
   }
-  > .board_list_time {
+  > .table_list_time {
     width: 30%;
   }
 `;

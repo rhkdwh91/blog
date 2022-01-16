@@ -22,13 +22,18 @@ export const userSchema = gql`
     result: String
     code: Int
   }
+  type VrifiedMessage {
+    data: User
+    result: String
+    code: Int
+  }
   extend type Query {
     user(user_id: String!): QueryMessage
     users(limit: Int, offset: Int): QueryMessage
   }
   extend type Mutation {
     login(user_id: String!, password: String!): MutationMessage
-    loginCheck: MutationMessage
+    varifiedStatus: VrifiedMessage
     logout: MutationMessage
     signUp(
       user_id: String!
@@ -130,16 +135,28 @@ export const userResolver = {
         return results;
       }
     },
-    loginCheck: async (_, {}, context) => {
+    varifiedStatus: async (_, {}, context) => {
       try {
         const isUser = await isAuthenticated(context);
         if (isUser.code === 200) {
           return isUser;
         } else {
+          if (isUser.result === "TokenExpiredError: jwt expired") {
+            if (process.env.NODE_ENV === "production") {
+              context.res.clearCookie("authtoken", { domain: ".josns.pe.kr" });
+            } else {
+              context.res.clearCookie("authtoken");
+            }
+            return statusUtil.false(
+              {},
+              "로그인 유지시간이 지나 로그아웃 되었습니다.",
+              401
+            );
+          }
           throw isUser.result;
         }
       } catch (e) {
-        const results = statusUtil.false("", String(e), 400);
+        const results = statusUtil.false({}, String(e), 400);
         return results;
       }
     },

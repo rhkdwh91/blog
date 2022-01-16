@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { State } from "store/reducer";
 import * as commonStyle from "../style/commonStyle";
 
 const menus = [
@@ -10,6 +12,7 @@ const menus = [
 ];
 
 function HeaderCommon() {
+  const { isLogin } = useSelector((root: State) => root.user);
   const menuList = menus.map((menu) => {
     return (
       <commonStyle.MenusItem key={menu.name}>
@@ -20,7 +23,14 @@ function HeaderCommon() {
 
   return (
     <commonStyle.HeaderWrap>
-      <commonStyle.MenusWrap>{menuList}</commonStyle.MenusWrap>
+      <commonStyle.MenusWrap>
+        {menuList}{" "}
+        {isLogin ? (
+          <Link href="/admin">Logout</Link>
+        ) : (
+          <Link href="/admin">Login</Link>
+        )}
+      </commonStyle.MenusWrap>
     </commonStyle.HeaderWrap>
   );
 }
