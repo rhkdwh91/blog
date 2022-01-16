@@ -46,7 +46,6 @@ export default function DrafteEditor({ postCreate }: IDraftEditor) {
     postCreate({
       title,
       content,
-      userName: "test",
     });
   }, [title, content]);
 

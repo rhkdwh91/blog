@@ -7,6 +7,7 @@ export const GET_POSTS = gql`
       title
       content
       userName
+      userId
       createdAt
       updatedAt
     }
@@ -20,6 +21,7 @@ export const GET_POST = gql`
       title
       content
       userName
+      userId
       createdAt
       updatedAt
     }
@@ -27,19 +29,14 @@ export const GET_POST = gql`
 `;
 
 export const POST_CREATE = gql`
-  mutation PostCreate($title: String, $content: String, $userName: String) {
-    postCreate(title: $title, content: $content, userName: $userName)
+  mutation PostCreate($title: String, $content: String) {
+    postCreate(title: $title, content: $content)
   }
 `;
 
 export const POST_EDIT = gql`
-  mutation PostEdit(
-    $uid: Int!
-    $title: String
-    $content: String
-    $userName: String
-  ) {
-    postEdit(uid: $uid, title: $title, content: $content, userName: $userName)
+  mutation PostEdit($uid: Int!, $title: String, $content: String) {
+    postEdit(uid: $uid, title: $title, content: $content)
   }
 `;
 

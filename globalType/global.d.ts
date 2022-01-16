@@ -20,6 +20,7 @@ declare type PostType = {
   title?: string;
   content?: string;
   userName?: string;
+  userId?: string;
 };
 
 declare type PostUidType = PostType & {

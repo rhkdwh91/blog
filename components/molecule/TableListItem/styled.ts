@@ -15,9 +15,9 @@ export const ListItem = styled.div`
     width: 50%;
   }
   > .table_list_username {
-    width: 10%;
+    width: 20%;
   }
   > .table_list_time {
-    width: 30%;
+    width: 20%;
   }
 `;

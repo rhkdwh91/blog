@@ -29,6 +29,10 @@ export class Posts extends Model<Posts> {
 
   @AllowNull(true)
   @Column(DataType.STRING)
+  userId!: string;
+
+  @AllowNull(true)
+  @Column(DataType.STRING)
   userName!: string;
 
   @CreatedAt
