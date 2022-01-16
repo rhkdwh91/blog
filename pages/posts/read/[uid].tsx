@@ -2,21 +2,21 @@ import React from "react";
 import { GetServerSideProps } from "next";
 //import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
-import { GET_BOARD } from "hooks/useBoardQuery";
-import DraftBoard from "components/molecule/DraftBoard";
+import { GET_POST } from "hooks/usePostsQuery";
+import DraftPost from "components/molecule/DraftPost";
 
-function BoardRead({ uid }) {
+function PostsRead({ uid }) {
   //const router = useRouter();
   //const { uid } = router.query;
-  const board = useQuery(GET_BOARD, {
+  const post = useQuery(GET_POST, {
     variables: {
       uid: Number(uid),
     },
   });
   return (
     <div>
-      <h1>{!board?.loading && board?.data?.title}</h1>
-      {!board?.loading && <DraftBoard content={board?.data?.board?.content} />}
+      <h1>{!post?.loading && post?.data?.title}</h1>
+      {!post?.loading && <DraftPost content={post?.data?.post?.content} />}
     </div>
   );
 }
@@ -31,4 +31,4 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   };
 };
 
-export default React.memo(BoardRead);
+export default React.memo(PostsRead);

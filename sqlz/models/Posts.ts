@@ -11,8 +11,8 @@ import {
   AutoIncrement,
 } from "sequelize-typescript";
 
-@Table({ tableName: "board", timestamps: true })
-export class Board extends Model<Board> {
+@Table({ tableName: "posts", timestamps: true })
+export class Posts extends Model<Posts> {
   @PrimaryKey
   @AllowNull(false)
   @AutoIncrement

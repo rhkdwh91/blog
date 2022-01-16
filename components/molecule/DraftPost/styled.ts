@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ContentBoard = styled.div`
+export const ContentBox = styled.div`
   position: relative;
   background-color: #fff;
   border: 0.0625rem solid #d7e2eb;

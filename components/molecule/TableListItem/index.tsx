@@ -1,11 +1,11 @@
 import Link from "next/link";
 import * as Styled from "./styled";
 
-interface BoardListItem {
-  data: BoardQueryType;
+interface ITableListItemProps {
+  data: PostQueryType;
 }
 
-export default function BoardListItem({ data }: BoardListItem) {
+export default function TableListItem({ data }: ITableListItemProps) {
   return (
     <Link href={`/board/read/${data.uid}`}>
       <Styled.ListItem>

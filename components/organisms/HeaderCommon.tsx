@@ -5,7 +5,7 @@ const menus = [
   { name: "Profile", src: "/" },
   { name: "Careers", src: "/careers" },
   { name: "Portfolio", src: "/portfolio" },
-  { name: "Board", src: "/board" },
+  { name: "Posts", src: "/posts" },
   { name: "Contact", src: "/contact" },
 ];
 

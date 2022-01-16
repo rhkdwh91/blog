@@ -1,8 +1,8 @@
-import { Board } from "../../sqlz/models/Board";
+import { Posts } from "../../sqlz/models/Posts";
 import { gql } from "apollo-server-express";
 
-export const boardSchema = gql`
-  type Board {
+export const postsSchema = gql`
+  type Post {
     uid: Int!
     title: String
     content: String
@@ -11,26 +11,26 @@ export const boardSchema = gql`
     updatedAt: String
   }
   extend type Query {
-    boardList(limit: Int, offset: Int): [Board]!
-    board(uid: Int): Board!
+    posts(limit: Int, offset: Int): [Post]!
+    post(uid: Int): Post!
   }
   extend type Mutation {
-    boardCreate(title: String, content: String, userName: String): String
-    boardEdit(
+    postCreate(title: String, content: String, userName: String): String
+    postEdit(
       uid: Int!
       title: String
       content: String
       userName: String
     ): String
-    boardDel(uid: Int!): String
+    postDel(uid: Int!): String
   }
 `;
 
-export const boardResolver = {
+export const postsResolver = {
   Query: {
-    boardList: async (_, { limit, offset }) => {
+    posts: async (_, { limit, offset }) => {
       //_로 제거 가능
-      const result = await Board.findAll({
+      const result = await Posts.findAll({
         offset,
         limit,
         raw: true,
@@ -38,8 +38,8 @@ export const boardResolver = {
       });
       return result;
     },
-    board: async (_, { uid }) => {
-      const result = await Board.findOne({
+    post: async (_, { uid }) => {
+      const result = await Posts.findOne({
         where: {
           uid,
         },
@@ -48,9 +48,9 @@ export const boardResolver = {
     },
   },
   Mutation: {
-    boardCreate: async (_, payload) => {
+    postCreate: async (_, payload) => {
       try {
-        const result = await Board.create(payload).catch(function (err) {
+        const result = await Posts.create(payload).catch(function (err) {
           console.log(err);
           const isSequelizeValidateError =
             err.name === "SequelizeValidationError" ||
@@ -69,9 +69,9 @@ export const boardResolver = {
         return err;
       }
     },
-    boardEdit: async (_, payload) => {
+    postEdit: async (_, payload) => {
       try {
-        const result = await Board.update(payload, {
+        const result = await Posts.update(payload, {
           where: {
             uid: payload.uid,
           },
@@ -93,9 +93,9 @@ export const boardResolver = {
         return err;
       }
     },
-    boardDel: async (_, { uid }) => {
+    postDel: async (_, { uid }) => {
       try {
-        const result = await Board.destroy({ where: { uid } }).catch(function (
+        const result = await Posts.destroy({ where: { uid } }).catch(function (
           err
         ) {
           const isSequelizeValidateError =

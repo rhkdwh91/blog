@@ -16,17 +16,17 @@ declare type CareerQueryType = CareerUidType & {
   updatedAt?: string;
 };
 
-declare type BoardType = {
+declare type PostType = {
   title?: string;
   content?: string;
   userName?: string;
 };
 
-declare type BoardUidType = BoardType & {
+declare type PostUidType = PostType & {
   uid: number;
 };
 
-declare type BoardQueryType = BoardUidType & {
+declare type PostQueryType = PostUidType & {
   createAt?: string;
   updatedAt?: string;
 };

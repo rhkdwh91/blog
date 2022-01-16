@@ -2,7 +2,7 @@ import { gql, makeExecutableSchema } from "apollo-server-express";
 import { userSchema, userResolver } from "./model/user";
 import { portfolioSchema, portfolioResolver } from "./model/portfolio";
 import { careersSchema, careersResolver } from "./model/careers";
-import { boardSchema, boardResolver } from "./model/board";
+import { postsSchema, postsResolver } from "./model/posts";
 
 const RootSchema = gql`
   type Query {
@@ -25,13 +25,13 @@ export const schema = makeExecutableSchema({
     userSchema,
     portfolioSchema,
     careersSchema,
-    boardSchema,
+    postsSchema,
   ],
   resolvers: [
     RootResolver,
     userResolver,
     portfolioResolver,
     careersResolver,
-    boardResolver,
+    postsResolver,
   ],
 });

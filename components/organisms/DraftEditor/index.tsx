@@ -10,10 +10,10 @@ import DOMPurify from "dompurify";
 import * as Styled from "./styled";
 
 interface IDraftEditor {
-  boardCreate: (payload: BoardType) => Promise<void>;
+  postCreate: (payload: PostType) => Promise<void>;
 }
 
-export default function DrafteEditor({ boardCreate }: IDraftEditor) {
+export default function DrafteEditor({ postCreate }: IDraftEditor) {
   const dispatch = useDispatch();
   const { title, content } = useSelector((state: State) => state.board);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -43,7 +43,7 @@ export default function DrafteEditor({ boardCreate }: IDraftEditor) {
   };
 
   const handleClickSave = useCallback(() => {
-    boardCreate({
+    postCreate({
       title,
       content,
       userName: "test",
