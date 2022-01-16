@@ -1,5 +1,6 @@
 import { Careers } from "../../sqlz/models/Careers";
 import { gql } from "apollo-server-express";
+import { isAuthenticated } from "../utils/jwt";
 
 export const careersSchema = gql`
   type Career {
@@ -52,68 +53,80 @@ export const careersResolver = {
     },
   },
   Mutation: {
-    careerCreate: async (_, payload) => {
+    careerCreate: async (_, payload, context) => {
       try {
-        const result = await Careers.create(payload).catch(function (err) {
-          console.log(err);
-          const isSequelizeValidateError =
-            err.name === "SequelizeValidationError" ||
-            err.name === "SequelizeUniqueConstraintError";
-          if (isSequelizeValidateError) {
-            throw "sequelize 에러입니다.";
-          }
-        });
-        if (result) {
-          return "성공";
-        } else {
-          throw "sequelize 에러입니다.";
-        }
-      } catch (err) {
-        console.error(err);
-        return err;
-      }
-    },
-    careerEdit: async (_, payload) => {
-      try {
-        const result = await Careers.update(payload, {
-          where: {
-            uid: payload.uid,
-          },
-        }).catch(function (err) {
-          const isSequelizeValidateError =
-            err.name === "SequelizeValidationError" ||
-            err.name === "SequelizeUniqueConstraintError";
-          if (isSequelizeValidateError) {
-            throw "sequelize 에러입니다.";
-          }
-        });
-        if (result) {
-          return "성공";
-        } else {
-          throw "sequelize 에러입니다.";
-        }
-      } catch (err) {
-        console.error(err);
-        return err;
-      }
-    },
-    careerDel: async (_, { uid }) => {
-      try {
-        const result = await Careers.destroy({ where: { uid } }).catch(
-          function (err) {
+        const isUser = await isAuthenticated(context);
+        if (isUser.code === 200) {
+          const result = await Careers.create(payload).catch(function (err) {
+            console.log(err);
             const isSequelizeValidateError =
               err.name === "SequelizeValidationError" ||
               err.name === "SequelizeUniqueConstraintError";
             if (isSequelizeValidateError) {
               throw "sequelize 에러입니다.";
             }
+          });
+          if (result) {
+            return "성공";
+          } else {
+            throw "sequelize 에러입니다.";
           }
-        );
-        if (result) {
-          return "성공";
-        } else {
-          throw "sequelize 에러입니다.";
         }
+        throw isUser.result;
+      } catch (err) {
+        console.error(err);
+        return err;
+      }
+    },
+    careerEdit: async (_, payload, context) => {
+      try {
+        const isUser = await isAuthenticated(context);
+        if (isUser.code === 200) {
+          const result = await Careers.update(payload, {
+            where: {
+              uid: payload.uid,
+            },
+          }).catch(function (err) {
+            const isSequelizeValidateError =
+              err.name === "SequelizeValidationError" ||
+              err.name === "SequelizeUniqueConstraintError";
+            if (isSequelizeValidateError) {
+              throw "sequelize 에러입니다.";
+            }
+          });
+          if (result) {
+            return "성공";
+          } else {
+            throw "sequelize 에러입니다.";
+          }
+        }
+        throw isUser.result;
+      } catch (err) {
+        console.error(err);
+        return err;
+      }
+    },
+    careerDel: async (_, { uid }, context) => {
+      try {
+        const isUser = await isAuthenticated(context);
+        if (isUser.code === 200) {
+          const result = await Careers.destroy({ where: { uid } }).catch(
+            function (err) {
+              const isSequelizeValidateError =
+                err.name === "SequelizeValidationError" ||
+                err.name === "SequelizeUniqueConstraintError";
+              if (isSequelizeValidateError) {
+                throw "sequelize 에러입니다.";
+              }
+            }
+          );
+          if (result) {
+            return "성공";
+          } else {
+            throw "sequelize 에러입니다.";
+          }
+        }
+        throw isUser.result;
       } catch (err) {
         console.error(err);
         return err;

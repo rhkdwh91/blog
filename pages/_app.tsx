@@ -38,7 +38,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       const result = await apolloClient.mutate({
         mutation: VARIFIED_STATUS,
       });
-      console.log(result);
       if (result.data.varifiedStatus.code === 200) {
         dispatch({
           type: LOGIN_SUCCESS,
@@ -46,7 +45,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         });
       } else {
         dispatch({ type: LOGOUT_SUCCESS });
-        throw result.data.varifiedStatus.result;
+        if (result.data.varifiedStatus.code === 401)
+          throw result.data.varifiedStatus.result;
       }
     } catch (e) {
       alert(e);

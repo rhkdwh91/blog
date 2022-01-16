@@ -33,7 +33,11 @@ export async function isAuthenticated(context) {
       throw "로그인 해 주세요.";
     }
   } catch (e) {
-    const results = statusUtil.false({}, String(e), 400);
+    const results = statusUtil.false(
+      { uid: 0, user_id: "", user_name: "", createdAt: "", updatedAt: "" },
+      String(e),
+      400
+    );
     return results;
   }
 }

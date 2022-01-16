@@ -22,7 +22,7 @@ export const userSchema = gql`
     result: String
     code: Int
   }
-  type VrifiedMessage {
+  type VarifiedMessage {
     data: User
     result: String
     code: Int
@@ -33,7 +33,7 @@ export const userSchema = gql`
   }
   extend type Mutation {
     login(user_id: String!, password: String!): MutationMessage
-    varifiedStatus: VrifiedMessage
+    varifiedStatus: VarifiedMessage
     logout: MutationMessage
     signUp(
       user_id: String!
@@ -148,7 +148,13 @@ export const userResolver = {
               context.res.clearCookie("authtoken");
             }
             return statusUtil.false(
-              {},
+              {
+                uid: 0,
+                user_id: "",
+                user_name: "",
+                createdAt: "",
+                updatedAt: "",
+              },
               "로그인 유지시간이 지나 로그아웃 되었습니다.",
               401
             );
@@ -156,7 +162,11 @@ export const userResolver = {
           throw isUser.result;
         }
       } catch (e) {
-        const results = statusUtil.false({}, String(e), 400);
+        const results = statusUtil.false(
+          { uid: 0, user_id: "", user_name: "", createdAt: "", updatedAt: "" },
+          String(e),
+          400
+        );
         return results;
       }
     },

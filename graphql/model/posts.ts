@@ -1,5 +1,6 @@
 import { Posts } from "../../sqlz/models/Posts";
 import { gql } from "apollo-server-express";
+import { isAuthenticated } from "../utils/jwt";
 
 export const postsSchema = gql`
   type Post {
@@ -48,68 +49,80 @@ export const postsResolver = {
     },
   },
   Mutation: {
-    postCreate: async (_, payload) => {
+    postCreate: async (_, payload, context) => {
       try {
-        const result = await Posts.create(payload).catch(function (err) {
-          console.log(err);
-          const isSequelizeValidateError =
-            err.name === "SequelizeValidationError" ||
-            err.name === "SequelizeUniqueConstraintError";
-          if (isSequelizeValidateError) {
+        const isUser = await isAuthenticated(context);
+        if (isUser.code === 200) {
+          const result = await Posts.create(payload).catch(function (err) {
+            console.log(err);
+            const isSequelizeValidateError =
+              err.name === "SequelizeValidationError" ||
+              err.name === "SequelizeUniqueConstraintError";
+            if (isSequelizeValidateError) {
+              throw "sequelize 에러입니다.";
+            }
+          });
+          if (result) {
+            return "성공";
+          } else {
             throw "sequelize 에러입니다.";
           }
-        });
-        if (result) {
-          return "성공";
-        } else {
-          throw "sequelize 에러입니다.";
         }
+        throw isUser.result;
       } catch (err) {
         console.error(err);
         return err;
       }
     },
-    postEdit: async (_, payload) => {
+    postEdit: async (_, payload, context) => {
       try {
-        const result = await Posts.update(payload, {
-          where: {
-            uid: payload.uid,
-          },
-        }).catch(function (err) {
-          const isSequelizeValidateError =
-            err.name === "SequelizeValidationError" ||
-            err.name === "SequelizeUniqueConstraintError";
-          if (isSequelizeValidateError) {
+        const isUser = await isAuthenticated(context);
+        if (isUser.code === 200) {
+          const result = await Posts.update(payload, {
+            where: {
+              uid: payload.uid,
+            },
+          }).catch(function (err) {
+            const isSequelizeValidateError =
+              err.name === "SequelizeValidationError" ||
+              err.name === "SequelizeUniqueConstraintError";
+            if (isSequelizeValidateError) {
+              throw "sequelize 에러입니다.";
+            }
+          });
+          if (result) {
+            return "성공";
+          } else {
             throw "sequelize 에러입니다.";
           }
-        });
-        if (result) {
-          return "성공";
-        } else {
-          throw "sequelize 에러입니다.";
         }
+        throw isUser.result;
       } catch (err) {
         console.error(err);
         return err;
       }
     },
-    postDel: async (_, { uid }) => {
+    postDel: async (_, { uid }, context) => {
       try {
-        const result = await Posts.destroy({ where: { uid } }).catch(function (
-          err
-        ) {
-          const isSequelizeValidateError =
-            err.name === "SequelizeValidationError" ||
-            err.name === "SequelizeUniqueConstraintError";
-          if (isSequelizeValidateError) {
+        const isUser = await isAuthenticated(context);
+        if (isUser.code === 200) {
+          const result = await Posts.destroy({ where: { uid } }).catch(
+            function (err) {
+              const isSequelizeValidateError =
+                err.name === "SequelizeValidationError" ||
+                err.name === "SequelizeUniqueConstraintError";
+              if (isSequelizeValidateError) {
+                throw "sequelize 에러입니다.";
+              }
+            }
+          );
+          if (result) {
+            return "성공";
+          } else {
             throw "sequelize 에러입니다.";
           }
-        });
-        if (result) {
-          return "성공";
-        } else {
-          throw "sequelize 에러입니다.";
         }
+        throw isUser.result;
       } catch (err) {
         console.error(err);
         return err;
