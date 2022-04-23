@@ -1,8 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
 const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/config/config.js")[env];
+const config = require(__dirname + "/config/config.mariadb.js")[env];
 
-/***
 export const sequelize = new Sequelize({
   database: config.database,
   username: config.username,
@@ -11,9 +10,10 @@ export const sequelize = new Sequelize({
   port: config.port,
   dialect: config.dialect,
   pool: config.pool,
-  models: [__dirname + '/models']
+  models: [__dirname + "/models"],
 });
-***/
+
+/*
 const storage =
   env === "production" ? "../sqlite/blog.db" : "./sqlz/config/blog.db";
 export const sequelize = new Sequelize({
@@ -23,4 +23,4 @@ export const sequelize = new Sequelize({
   //storage:'official_website.db',
   storage,
   models: [__dirname + "/models"],
-});
+});*/

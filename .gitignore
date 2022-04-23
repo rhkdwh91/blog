@@ -2,3 +2,4 @@ node_modules
 .next
 sqlz/config/blog.db
 .history
+sqlz/config/config.mariadb.js
