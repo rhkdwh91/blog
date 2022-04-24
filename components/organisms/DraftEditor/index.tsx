@@ -128,7 +128,7 @@ export default function DrafteEditor({ postAction, uid, data }: IDraftEditor) {
         />
         <button onClick={handleClickSave}>저장</button>
       </div>
-      <DraftPost content={content} />
+      <DraftPost title={title} content={content} height={uid ? 640 : 0} />
     </Styled.MyBlock>
   );
 }

@@ -13,7 +13,7 @@ function PostsRead({ uid }) {
   //const { uid } = router.query;
   const { isLogin } = useSelector((state: State) => state.user);
   const { postDelete } = usePostsQuery();
-  const post = useQuery(GET_POST, {
+  const { data, loading } = useQuery(GET_POST, {
     variables: {
       uid: Number(uid),
     },
@@ -25,8 +25,9 @@ function PostsRead({ uid }) {
 
   return (
     <div>
-      <h1>{!post?.loading && post?.data?.title}</h1>
-      {!post?.loading && <DraftPost content={post?.data?.post?.content} />}
+      {!loading && (
+        <DraftPost content={data?.post?.content} title={data?.post?.title} />
+      )}
       {isLogin && (
         <div>
           <Link href={`/posts/edit/${uid}`}>

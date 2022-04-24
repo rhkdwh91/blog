@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { usePostsQuery } from "hooks/usePostsQuery";
 import TableListItem from "components/molecule/TableListItem";
-import * as Styled from "components/template/board/styled";
+import * as Styled from "components/template/posts/styled";
 import { useSelector } from "react-redux";
 import { State } from "store/reducer";
 
