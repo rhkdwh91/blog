@@ -15,7 +15,11 @@ function Posts() {
           postsData?.posts?.map((data) => (
             <TableListItem key={data.uid} data={data} />
           ))}
-        {isLogin && <Link href="/posts/write">글 쓰기</Link>}
+        {isLogin && (
+          <Link href="/posts/write">
+            <Styled.Button>글 쓰기</Styled.Button>
+          </Link>
+        )}
       </Styled.TableList>
     </div>
   );

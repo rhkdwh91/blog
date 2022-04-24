@@ -1,4 +1,5 @@
 import { gql, useQuery, useMutation } from "@apollo/client";
+import { useRouter } from "next/router";
 
 export const GET_POSTS = gql`
   query GetPosts($limit: Int!, $offset: Int!) {
@@ -47,6 +48,7 @@ export const POST_DELETE = gql`
 `;
 
 export const usePostsQuery = () => {
+  const router = useRouter();
   const {
     data: postsData,
     loading: postsLoading,
@@ -76,6 +78,7 @@ export const usePostsQuery = () => {
           throw createError;
         }
         alert(data.postCreate);
+        router.push("/posts");
       }
     } catch (err) {
       alert(String(err));
@@ -94,6 +97,7 @@ export const usePostsQuery = () => {
           throw editError;
         }
         alert(data.postEdit);
+        router.push("/posts");
       }
     } catch (err) {
       alert(String(err));
@@ -111,6 +115,7 @@ export const usePostsQuery = () => {
           throw delError;
         }
         alert(data.postDel);
+        router.push("/posts");
       }
     } catch (err) {
       alert(String(err));

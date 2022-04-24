@@ -8,6 +8,7 @@ export const ListItem = styled.div`
   cursor: pointer;
   background-color: #fff;
   justify-content: space-between;
+  word-break: break-all;
   > .table_list_id {
     width: 10%;
   }

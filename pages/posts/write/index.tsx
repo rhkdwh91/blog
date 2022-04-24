@@ -9,7 +9,7 @@ function PostWrite() {
   const { postCreate } = usePostsQuery();
   return (
     <div>
-      <DrafteEditor postCreate={postCreate}></DrafteEditor>
+      <DrafteEditor postAction={postCreate}></DrafteEditor>
     </div>
   );
 }

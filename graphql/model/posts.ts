@@ -87,6 +87,7 @@ export const postsResolver = {
             const isSequelizeValidateError =
               err.name === "SequelizeValidationError" ||
               err.name === "SequelizeUniqueConstraintError";
+            console.error(err);
             if (isSequelizeValidateError) {
               throw "sequelize 에러입니다.";
             }
