@@ -16,6 +16,13 @@ export const MyBlock = styled.div`
       padding: 5px !important;
       border-radius: 2px !important;
     }
+    & pre {
+      border-left: solid 4px #00dd6d;
+      padding: 20px;
+    }
+    & div {
+      margin: 0;
+    }
     & h1 {
       font-size: 32px;
     }
@@ -30,6 +37,12 @@ export const MyBlock = styled.div`
     }
     & h5 {
       font-size: 14px;
+    }
+    & span {
+      line-height: 1.8;
+    }
+    & li {
+      line-height: 1.8;
     }
   }
 `;

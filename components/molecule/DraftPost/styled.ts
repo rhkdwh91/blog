@@ -35,7 +35,14 @@ export const ContentBox = styled.div<{ height?: number }>(
       font-weight: bold;
     }
     & span {
-      line-height: 1.2;
+      line-height: 1.8;
+    }
+    & pre {
+      background: #f1f1f1;
+      border-radius: 3px;
+      padding: 1px 10px;
+      border-left: solid 4px #00dd6d;
+      padding: 20px;
     }
     > ul {
       > li {
