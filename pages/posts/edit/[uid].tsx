@@ -6,9 +6,17 @@ import { CHANGE_TITLE, CHANGE_CONTENT } from "store/reducer/board";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 
+/*
 const DrafteEditor = dynamic(() => import("components/organisms/DraftEditor"), {
   ssr: false,
 });
+*/
+const WysiwygEditor = dynamic(
+  () => import("components/organisms/WysiwygEditor"),
+  {
+    ssr: false,
+  }
+);
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   const { query } = context;
@@ -45,7 +53,9 @@ function PostEdit({ uid }) {
 
   return (
     <div>
-      {!loading && <DrafteEditor postAction={postEdit} uid={uid} data={data} />}
+      {!loading && (
+        <WysiwygEditor postAction={postEdit} uid={uid} data={data} />
+      )}
     </div>
   );
 }
