@@ -6,6 +6,7 @@ import { State } from "store/reducer";
 //import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
 import { GET_POST, usePostsQuery } from "hooks/usePostsQuery";
+import ToastViewer from "components/organisms/ToastViewer";
 import DraftPost from "components/molecule/DraftPost";
 
 function PostsRead({ uid }) {
@@ -26,7 +27,10 @@ function PostsRead({ uid }) {
   return (
     <div>
       {!loading && (
-        <DraftPost content={data?.post?.content} title={data?.post?.title} />
+        <>
+          <ToastViewer content={data?.post?.content} />
+          <DraftPost content={data?.post?.content} title={data?.post?.title} />
+        </>
       )}
       {isLogin && (
         <div>

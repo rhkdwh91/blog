@@ -8,6 +8,10 @@ const WysiwygEditor = dynamic(
   }
 );
 
+const ToastEditor = dynamic(() => import("components/organisms/ToastEditor"), {
+  ssr: false,
+});
+
 /*
 const DrafteEditor = dynamic(() => import("components/organisms/DraftEditor"), {
   ssr: false,
@@ -18,7 +22,7 @@ function PostWrite() {
   const { postCreate } = usePostsQuery();
   return (
     <div>
-      뭐야 시발
+      <ToastEditor postAction={postCreate} />
       <WysiwygEditor postAction={postCreate}></WysiwygEditor>
     </div>
   );
