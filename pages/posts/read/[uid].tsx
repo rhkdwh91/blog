@@ -1,13 +1,18 @@
 import React, { useCallback } from "react";
 import Link from "next/link";
 import { GetServerSideProps } from "next";
+import dynamic from "next/dynamic";
+
 import { useSelector } from "react-redux";
 import { State } from "store/reducer";
 //import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
 import { GET_POST, usePostsQuery } from "hooks/usePostsQuery";
-import ToastViewer from "components/organisms/ToastViewer";
 import DraftPost from "components/molecule/DraftPost";
+
+const ToastViewer = dynamic(() => import("components/organisms/ToastViewer"), {
+  ssr: false,
+});
 
 function PostsRead({ uid }) {
   //const router = useRouter();
