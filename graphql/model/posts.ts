@@ -1,8 +1,15 @@
 import { Posts } from "../../sqlz/models/Posts";
 import { gql } from "apollo-server-express";
 import { isAuthenticated } from "../utils/jwt";
+import { GraphQLUpload } from "graphql-upload";
+import { uploadS3 } from "../utils/s3-uploader";
 
 export const postsSchema = gql`
+  # The implementation for this scalar is provided by the
+  # 'GraphQLUpload' export from the 'graphql-upload' package
+  # in the resolver map below.
+  scalar Upload
+
   type Post {
     uid: Int!
     title: String
@@ -12,6 +19,14 @@ export const postsSchema = gql`
     createdAt: String
     updatedAt: String
   }
+  type FileUrl {
+    url: [String]!
+  }
+  type File {
+    filename: String!
+    mimetype: String!
+    encoding: String!
+  }
   extend type Query {
     posts(limit: Int, offset: Int): [Post]!
     post(uid: Int): Post!
@@ -20,10 +35,24 @@ export const postsSchema = gql`
     postCreate(title: String, content: String): String
     postEdit(uid: Int!, title: String, content: String): String
     postDel(uid: Int!): String
+    fileUpload(file: [Upload]!): FileUrl!
   }
 `;
 
+const fileRenamer = (filename: string): string => {
+  const queHoraEs = Date.now();
+  const regex = /[\s_-]/gi;
+  const fileTemp = filename.replace(regex, ".");
+  let arrTemp = [fileTemp.split(".")];
+  return `${arrTemp[0]
+    .slice(0, arrTemp[0].length - 1)
+    .join("_")}${queHoraEs}.${arrTemp[0].pop()}`;
+};
+
 export const postsResolver = {
+  // This maps the `Upload` scalar to the implementation provided
+  // by the `graphql-upload` package.
+  Upload: GraphQLUpload,
   Query: {
     posts: async (_, { limit, offset }) => {
       //_로 제거 가능
@@ -130,6 +159,17 @@ export const postsResolver = {
         console.error(err);
         return err;
       }
+    },
+    fileUpload: async (_, { file }) => {
+      let url: any = [];
+      for (let i = 0; i < file.length; i++) {
+        const { createReadStream, filename, mimetype } = await file[i];
+        const stream = createReadStream();
+        const assetUniqName = fileRenamer(filename);
+        const result = await uploadS3(stream, "blog", assetUniqName, mimetype);
+        url.push(result?.Location);
+      }
+      return { url: url };
     },
   },
 };

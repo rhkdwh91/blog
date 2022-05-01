@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from "react";
+import React, { useRef, useCallback, useEffect } from "react";
 import Prism from "prismjs";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "store/reducer";
@@ -15,8 +15,23 @@ import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
 import "tui-color-picker/dist/tui-color-picker.css";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
 import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
+import { useMutation, gql } from "@apollo/client";
+
+/*
+import S3 from "react-aws-s3-typescript";
+import { v4 as uuidv4 } from "uuid";
+import s3config from "config/s3config";
+*/
 
 import * as Styled from "./styled";
+
+const UPLOAD_FILE = gql`
+  mutation fileUpload($file: [Upload]!) {
+    fileUpload(file: $file) {
+      url
+    }
+  }
+`;
 
 interface IToastEditor {
   postAction: (payload) => Promise<void>;
@@ -65,6 +80,33 @@ function ToastEditor({ postAction, uid, data }: IToastEditor) {
           content,
         });
   }, [title, content]);
+
+  const [fileUpload] = useMutation(UPLOAD_FILE, {
+    onCompleted: (data) => console.log(data),
+  });
+
+  useEffect(() => {
+    if (editorRef.current) {
+      editorRef.current.getInstance().removeHook("addImageBlobHook");
+
+      editorRef.current
+        .getInstance()
+        .addHook("addImageBlobHook", async (blob, callback) => {
+          const file = blob;
+          if (!file) return;
+          const result: any = await fileUpload({
+            variables: { file: [file] },
+          });
+          console.log(result);
+          return callback(result?.data.fileUpload.url[0], "imageURL");
+          /*
+          const ReactS3Client = new S3(s3config);
+          ReactS3Client.uploadFile(blob, uuidv4())
+            .then((data) => callback(data.location, "imageURL"))
+            .catch((err) => console.log(err));*/
+        });
+    }
+  }, []);
 
   return (
     <div style={{ textAlign: "left" }}>

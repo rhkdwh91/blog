@@ -4,7 +4,10 @@ function MainProfile() {
   return (
     <profileStyle.CardWrap>
       <profileStyle.ImageCard>
-        <img src="/images/my_character.png" width="50%" />
+        <img
+          src="https://bucket-9gqcvu.s3.ap-northeast-2.amazonaws.com/blog/my_character.png"
+          width="50%"
+        />
       </profileStyle.ImageCard>
       <profileStyle.ContentCard>
         <profileStyle.ContentText>

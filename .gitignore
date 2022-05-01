@@ -3,3 +3,4 @@ node_modules
 sqlz/config/blog.db
 .history
 sqlz/config/config.mariadb.js
+config

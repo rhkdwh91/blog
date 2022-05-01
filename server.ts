@@ -11,6 +11,7 @@ import cors from "cors";
 import config from "./server_config.json";
 import { sequelize } from "./sqlz";
 import { schema } from "./graphql";
+import { graphqlUploadExpress } from "graphql-upload";
 
 //const dev:boolean = process.env.NODE_ENV !== "production";
 let nextApp;
@@ -47,9 +48,11 @@ nextApp.prepare().then(() => {
       res: ctx.res,
     };
   }
+  app.use(graphqlUploadExpress({ maxFileSize: 100000000, maxFiles: 10 }));
   // ApolloServer 생성
   const server = new ApolloServer({
     schema,
+    uploads: false, // fileUpload 기능 비활성화 https://github.com/jaydenseric/graphql-upload/issues/187
     introspection: true, // 스키마 검사 활성화 default: true
     playground: true, // playgorund 활성화 default: true
     context,
@@ -58,6 +61,7 @@ nextApp.prepare().then(() => {
     app,
     path: "/graphql",
   });
+
   app.all("*", (req, res) => {
     return handle(req, res);
   });
