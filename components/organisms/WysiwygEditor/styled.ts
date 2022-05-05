@@ -1,10 +1,24 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
+export const FontBox = styled.div<{ isOpen: boolean }>(
+  ({ isOpen }) => css`
+    ${isOpen
+      ? css`
+          display: block;
+        `
+      : css`
+          display: none;
+        `}
+    background-color: #fff;
+  `
+);
 
 export const MyBlock = styled.div`
   position: relative;
   & .awlhfjh {
     position: absolute;
     display: flex;
+    transform: translate(-50%) scale(0);
     > div {
       margin: 0 2px;
     }
@@ -26,13 +40,11 @@ export const MyBlock = styled.div`
   }
 
   & .public-DraftStyleDefault-pre {
-    > pre {
-      background: #f1f1f1;
-      border-radius: 3px;
-      padding: 1px 10px;
-      border-left: solid 4px #00dd6d;
-      padding: 5px 20px;
-    }
+    background: #f1f1f1;
+    border-radius: 3px;
+    padding: 1px 10px;
+    border-left: solid 4px #00dd6d;
+    padding: 5px 20px;
   }
 
   & .RichEditor-controls {

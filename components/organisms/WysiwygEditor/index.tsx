@@ -2,15 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "store/reducer";
 import { RESET_DRAFT, CHANGE_TITLE, CHANGE_CONTENT } from "store/reducer/board";
-import {
-  EditorState,
-  RichUtils,
-  //AtomicBlockUtils,
-  //DefaultDraftBlockRenderMap,
-  convertFromRaw,
-  convertToRaw,
-  //convertFromHTML,
-} from "draft-js";
+import { EditorState, RichUtils, convertFromRaw, convertToRaw } from "draft-js";
 import Editor, { composeDecorators } from "@draft-js-plugins/editor";
 
 import createResizeablePlugin from "@draft-js-plugins/resizeable";
@@ -20,9 +12,14 @@ import createImagePlugin from "@draft-js-plugins/image";
 import createAlignmentPlugin from "@draft-js-plugins/alignment";
 
 import createBlockDndPlugin from "@draft-js-plugins/drag-n-drop";
-import createDragNDropUploadPlugin from "@draft-js-plugins/drag-n-drop-upload";
+//import createDragNDropUploadPlugin from "@draft-js-plugins/drag-n-drop-upload";
+//import mockUpload from "components/organisms/Wysiwyg/mockUpload";
 
-import mockUpload from "components/organisms/Wysiwyg/mockUplad";
+import {
+  styleMap,
+  BLOCK_TYPES,
+  INLINE_STYLES,
+} from "components/organisms/Wysiwyg/styleMap";
 
 import DOMPurify from "dompurify";
 import * as Styled from "./styled";
@@ -41,17 +38,19 @@ const { AlignmentTool } = alignmentPlugin;
 const decorator = composeDecorators(
   resizeablePlugin.decorator,
   focusPlugin.decorator,
-  alignmentPlugin.decorator
+  alignmentPlugin.decorator,
+  blockDndPlugin.decorator
 );
 const imagePlugin = createImagePlugin({ decorator });
 
+/*
 const dragNDropFileUploadPlugin = createDragNDropUploadPlugin({
   handleUpload: mockUpload as any,
   addImage: imagePlugin.addImage as any,
-});
+});*/
 
 const plugins = [
-  dragNDropFileUploadPlugin,
+  //dragNDropFileUploadPlugin,
   blockDndPlugin,
   focusPlugin,
   resizeablePlugin,
@@ -76,29 +75,6 @@ const StyleButton = ({ style, onToggle, active, label }) => {
   );
 };
 
-const BLOCK_TYPES = [
-  { label: "H1", style: "header-one" },
-  { label: "H2", style: "header-two" },
-  { label: "H3", style: "header-three" },
-  { label: "H4", style: "header-four" },
-  { label: "H5", style: "header-five" },
-  { label: "H6", style: "header-six" },
-  { label: "Blockquote", style: "blockquote" },
-  { label: "UL", style: "unordered-list-item" },
-  { label: "OL", style: "ordered-list-item" },
-  { label: "Code Block", style: "code-block" },
-  { label: "Fire", style: "new-block-type-name" },
-];
-
-const styleMap = {
-  CODE: {
-    backgroundColor: "rgba(0, 0, 0, 0.05)",
-    fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
-    fontSize: 16,
-    padding: 2,
-  },
-};
-
 const BlockStyleControls = ({ editorState, onToggle }) => {
   const selection = editorState.getSelection();
   const blockType = editorState
@@ -121,13 +97,6 @@ const BlockStyleControls = ({ editorState, onToggle }) => {
   );
 };
 
-const INLINE_STYLES = [
-  { label: "Bold", style: "BOLD" },
-  { label: "Italic", style: "ITALIC" },
-  { label: "Underline", style: "UNDERLINE" },
-  { label: "Monospace", style: "CODE" },
-];
-
 const InlineStyleControls = ({ editorState, onToggle }) => {
   var currentStyle = editorState.getCurrentInlineStyle();
   return (
@@ -145,6 +114,8 @@ const InlineStyleControls = ({ editorState, onToggle }) => {
   );
 };
 
+const fontSize = [30, 28, 26, 24, 22, 20, 18, 16, 14, 12];
+
 interface IDraftEditor {
   postAction: (payload) => Promise<void>;
   uid?: string;
@@ -155,7 +126,7 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
   const dispatch = useDispatch();
   const title = useSelector((state: State) => state.board.title);
   const content = useSelector((state: State) => state.board.content);
-
+  const [isFontBoxOpen, setIsFontBoxOpen] = useState<boolean>(false);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   const htmlToEditor = useCallback(() => {
@@ -284,6 +255,16 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
 
   const editor: any = useRef();
 
+  const handleClickFontBox = () => {
+    setIsFontBoxOpen(!isFontBoxOpen);
+  };
+
+  const toggleFontSize = (fontSize) => {
+    setEditorState(
+      RichUtils.toggleInlineStyle(editorState, `FONT_SIZE_${fontSize}`)
+    );
+  };
+
   return (
     <Styled.MyBlock>
       <div className="draft-editor-wrap">
@@ -293,6 +274,14 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
           onChange={handleChangeTitle}
           placeholder="제목을 입력해주세요"
         />
+        <button onClick={handleClickFontBox}>FontSize</button>
+        <Styled.FontBox isOpen={isFontBoxOpen}>
+          {fontSize.map((size) => (
+            <button key={size} onClick={() => toggleFontSize(size)}>
+              font {size}
+            </button>
+          ))}
+        </Styled.FontBox>
         <button
           disabled={editorState.getUndoStack().size <= 0}
           onMouseDown={() => setEditorState(EditorState.undo(editorState))}

@@ -48,13 +48,11 @@ export const MyBlock = styled.div`
   }
 
   & .public-DraftStyleDefault-pre {
-    > pre {
-      background: #f1f1f1;
-      border-radius: 3px;
-      padding: 1px 10px;
-      border-left: solid 4px #00dd6d;
-      padding: 5px 20px;
-    }
+    background: #f1f1f1;
+    border-radius: 3px;
+    padding: 1px 10px;
+    border-left: solid 4px #00dd6d;
+    padding: 5px 20px;
   }
 
   & .RichEditor-controls {

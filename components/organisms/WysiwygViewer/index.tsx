@@ -14,6 +14,7 @@ import createImagePlugin from "@draft-js-plugins/image";
 
 import createAlignmentPlugin from "@draft-js-plugins/alignment";
 //import { mediaBlockRenderer } from "components/organisms/WIsywyg/Media";
+import { styleMap } from "components/organisms/Wysiwyg/styleMap";
 
 const focusPlugin = createFocusPlugin();
 const resizeablePlugin = createResizeablePlugin();
@@ -52,6 +53,7 @@ export default function WysiwygEditor({ title, content }: IDraftEditor) {
           editorState={state}
           blockStyleFn={getBlockStyle}
           blockRenderMap={extendedBlockRenderMap}
+          customStyleMap={styleMap}
           //blockRendererFn={mediaBlockRenderer}
           plugins={plugins}
           onChange={() => {}}
