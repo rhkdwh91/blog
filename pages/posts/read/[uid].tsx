@@ -8,11 +8,13 @@ import { State } from "store/reducer";
 //import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
 import { GET_POST, usePostsQuery } from "hooks/usePostsQuery";
-import DraftPost from "components/molecule/DraftPost";
 
-const ToastViewer = dynamic(() => import("components/organisms/ToastViewer"), {
-  ssr: false,
-});
+const WisiwygViewer = dynamic(
+  () => import("components/organisms/WysiwygViewer"),
+  {
+    ssr: false,
+  }
+);
 
 function PostsRead({ uid }) {
   //const router = useRouter();
@@ -32,10 +34,10 @@ function PostsRead({ uid }) {
   return (
     <div>
       {!loading && (
-        <>
-          <ToastViewer content={data?.post?.content} />
-          <DraftPost content={data?.post?.content} title={data?.post?.title} />
-        </>
+        <WisiwygViewer
+          title={data?.post?.title}
+          content={data?.post?.content}
+        />
       )}
       {isLogin && (
         <div>

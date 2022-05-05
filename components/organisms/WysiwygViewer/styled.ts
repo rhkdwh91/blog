@@ -1,16 +1,8 @@
 import styled from "styled-components";
 
 export const MyBlock = styled.div`
-  position: relative;
-  & .awlhfjh {
-    position: absolute;
-    display: flex;
-    > div {
-      margin: 0 2px;
-    }
-  }
+  display: flex;
   & .RichEditor-root {
-    position: absolute;
     background: #fff;
     border: 1px solid #ddd;
     font-family: "Georgia", serif;
@@ -18,11 +10,41 @@ export const MyBlock = styled.div`
     padding: 15px;
   }
 
-  & .DraftEditor-root {
+  & .RichEditor-editor {
     border-top: 1px solid #ddd;
     cursor: text;
     font-size: 16px;
     margin-top: 10px;
+  }
+
+  & .RichEditor-editor .public-DraftEditorPlaceholder-root,
+  .RichEditor-editor .public-DraftEditor-content {
+    margin: 0 -15px -15px;
+    padding: 15px;
+  }
+
+  & .RichEditor-editor .public-DraftEditor-content {
+    min-height: 100px;
+  }
+
+  & .RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
+    display: none;
+  }
+
+  & .RichEditor-editor .RichEditor-blockquote {
+    border-left: 5px solid #eee;
+    color: #666;
+    font-family: "Hoefler Text", "Georgia", serif;
+    font-style: italic;
+    margin: 16px 0;
+    padding: 10px 20px;
+  }
+
+  & .RichEditor-editor .public-DraftStyleDefault-pre {
+    background-color: rgba(0, 0, 0, 0.05);
+    font-family: "Inconsolata", "Menlo", "Consolas", monospace;
+    font-size: 16px;
+    padding: 20px;
   }
 
   & .public-DraftStyleDefault-pre {

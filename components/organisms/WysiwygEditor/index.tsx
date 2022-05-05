@@ -1,20 +1,63 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "store/reducer";
 import { RESET_DRAFT, CHANGE_TITLE, CHANGE_CONTENT } from "store/reducer/board";
 import {
-  Editor,
   EditorState,
   RichUtils,
-  AtomicBlockUtils,
+  //AtomicBlockUtils,
   //DefaultDraftBlockRenderMap,
+  convertFromRaw,
+  convertToRaw,
+  //convertFromHTML,
 } from "draft-js";
-import { convertToHTML, convertFromHTML } from "draft-convert";
+import Editor, { composeDecorators } from "@draft-js-plugins/editor";
+
+import createResizeablePlugin from "@draft-js-plugins/resizeable";
+
+import createFocusPlugin from "@draft-js-plugins/focus";
+import createImagePlugin from "@draft-js-plugins/image";
+import createAlignmentPlugin from "@draft-js-plugins/alignment";
+
+import createBlockDndPlugin from "@draft-js-plugins/drag-n-drop";
+import createDragNDropUploadPlugin from "@draft-js-plugins/drag-n-drop-upload";
+
+import mockUpload from "components/organisms/Wysiwyg/mockUplad";
+
 import DOMPurify from "dompurify";
 import * as Styled from "./styled";
-import DraftPost from "components/molecule/DraftPost";
-import { mediaBlockRenderer } from "./Media";
-//import { linkDecorator } from "./Link";
+
+import {
+  getBlockStyle,
+  extendedBlockRenderMap,
+} from "components/organisms/Wysiwyg/CustomBlock";
+
+const focusPlugin = createFocusPlugin();
+const resizeablePlugin = createResizeablePlugin();
+const blockDndPlugin = createBlockDndPlugin();
+const alignmentPlugin = createAlignmentPlugin();
+const { AlignmentTool } = alignmentPlugin;
+
+const decorator = composeDecorators(
+  resizeablePlugin.decorator,
+  focusPlugin.decorator,
+  alignmentPlugin.decorator
+);
+const imagePlugin = createImagePlugin({ decorator });
+
+const dragNDropFileUploadPlugin = createDragNDropUploadPlugin({
+  handleUpload: mockUpload as any,
+  addImage: imagePlugin.addImage as any,
+});
+
+const plugins = [
+  dragNDropFileUploadPlugin,
+  blockDndPlugin,
+  focusPlugin,
+  resizeablePlugin,
+  imagePlugin,
+  alignmentPlugin,
+];
 
 const StyleButton = ({ style, onToggle, active, label }) => {
   const onMouseDown = (e) => {
@@ -117,7 +160,9 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
 
   const htmlToEditor = useCallback(() => {
     setEditorState(
-      EditorState.createWithContent(convertFromHTML(data.post.content))
+      EditorState.createWithContent(
+        convertFromRaw(JSON.parse(data.post.content))
+      )
     );
   }, [data]);
 
@@ -143,7 +188,7 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
   // HTML 변환 공통 함수
   const editorToHtml = useCallback(
     (editorState) => {
-      return convertToHTML(editorState.getCurrentContent());
+      return convertToRaw(editorState.getCurrentContent());
     },
     [editorState]
   );
@@ -155,7 +200,7 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
       dispatch({
         type: CHANGE_CONTENT,
         //data: editorToHtml(editorState),
-        data: String(editorToHtml(editorState)),
+        data: JSON.stringify(editorToHtml(editorState)),
       });
     },
     [editorState]
@@ -195,7 +240,7 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
   };
 
   const toggleInlineStyle = (inlineStyle) => {
-    setEditorState(RichUtils.toggleBlockType(editorState, inlineStyle));
+    setEditorState(RichUtils.toggleInlineStyle(editorState, inlineStyle));
   };
 
   const handleAddLink = () => {
@@ -229,14 +274,15 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
       "IMMUTABLE",
       { src }
     );
-    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    //const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
     const newEditorState = EditorState.set(editorState, {
       currentContent: contentStateWithEntity,
     });
-    return setEditorState(
-      AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, " ")
-    );
+
+    return setEditorState(imagePlugin.addImage(newEditorState, src, {}));
   };
+
+  const editor: any = useRef();
 
   return (
     <Styled.MyBlock>
@@ -289,50 +335,16 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
           editorState={editorState}
           onChange={onEditorStateChange}
           handleKeyCommand={handleKeyCommand}
-          //blockStyleFn={getBlockStyle}
+          blockStyleFn={getBlockStyle}
           customStyleMap={styleMap}
-          //ref="editor"
-          //blockRenderMap={extendedBlockRenderMap}
-          blockRendererFn={mediaBlockRenderer}
+          blockRenderMap={extendedBlockRenderMap}
+          //blockRendererFn={mediaBlockRenderer}
+          plugins={plugins}
+          ref={editor}
         />
-        <button onClick={handleClickSave}>저장</button>
+        <AlignmentTool />
       </div>
-      <DraftPost title={title} content={content} height={uid ? 640 : 0} />
+      <button onClick={handleClickSave}>저장</button>
     </Styled.MyBlock>
   );
 }
-
-/*
-const CustomComponent = ({ children }) => {
-  return (
-    <div>
-      <span> 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 </span>
-      {children}
-      <span> 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 </span>
-    </div>
-  );
-};
-
-const blockRenderMap = Immutable.Map({
-  "new-block-type-name": {
-    element: CustomComponent,
-  },
-});
-
-  const extendedBlockRenderMap =
-    DefaultDraftBlockRenderMap.merge(blockRenderMap);
-
-const getBlockStyle = (block) => {
-  switch (block.getType()) {
-    case "blockquote":
-      return "RichEditor-blockquote";
-    case "new-block-type-name":
-      return {
-        component: CustomComponent,
-        editable: false,
-      };
-    default:
-      return null;
-  }
-};
-*/
