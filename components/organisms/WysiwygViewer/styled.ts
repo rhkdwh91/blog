@@ -140,6 +140,8 @@ export const MyBlock = styled.div`
         position: relative;
         direction: ltr;
         counter-increment: ol0;
+        display: flex;
+        align-items: center;
         &::before {
           left: -36px;
           position: absolute;
@@ -156,6 +158,8 @@ export const MyBlock = styled.div`
           position: relative;
           direction: ltr;
           counter-increment: ol1;
+          display: flex;
+          align-items: center;
           &::before {
             left: -36px;
             position: absolute;
@@ -172,6 +176,8 @@ export const MyBlock = styled.div`
             position: relative;
             direction: ltr;
             counter-increment: ol2;
+            display: flex;
+            align-items: center;
             &::before {
               left: -36px;
               position: absolute;
