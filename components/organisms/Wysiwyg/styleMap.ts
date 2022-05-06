@@ -1,3 +1,5 @@
+import { Modifier, EditorState } from "draft-js";
+
 export const styleMap = {
   CODE: {
     backgroundColor: "rgba(0, 0, 0, 0.05)",
@@ -37,13 +39,35 @@ export const styleMap = {
   },
 };
 
+export const removeInlineStyles = (editorState) => {
+  try {
+    const contentState = editorState.getCurrentContent();
+    const contentWithoutStyles = Object.keys(styleMap).reduce(
+      (newContentState, style) =>
+        Modifier.removeInlineStyle(
+          newContentState,
+          editorState.getSelection(),
+          style
+        ),
+      contentState
+    );
+
+    const newEditorState = EditorState.push(
+      editorState,
+      contentWithoutStyles,
+      "change-inline-style"
+    );
+
+    return newEditorState;
+  } catch {
+    return editorState;
+  }
+};
+
 export const BLOCK_TYPES = [
-  { label: "H1", style: "header-one" },
-  { label: "H2", style: "header-two" },
-  { label: "H3", style: "header-three" },
-  { label: "H4", style: "header-four" },
-  { label: "H5", style: "header-five" },
-  { label: "H6", style: "header-six" },
+  { label: "H1", style: "HeaderOne" },
+  { label: "H2", style: "HeaderTwo" },
+  { label: "H3", style: "HeaderThree" },
   { label: "Blockquote", style: "blockquote" },
   { label: "UL", style: "unordered-list-item" },
   { label: "OL", style: "ordered-list-item" },

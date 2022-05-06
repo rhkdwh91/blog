@@ -45,9 +45,9 @@ export default function WysiwygEditor({ title, content }: IDraftEditor) {
     }
   }, []);
   return (
-    <Styled.MyBlock>
-      <div>
-        <h1>{title}</h1>
+    <div>
+      <Styled.PostTitle>{title}</Styled.PostTitle>
+      <Styled.MyBlock>
         <Editor
           readOnly={true}
           editorState={state}
@@ -59,7 +59,7 @@ export default function WysiwygEditor({ title, content }: IDraftEditor) {
           onChange={() => {}}
           handleKeyCommand={() => "not-handled"}
         />
-      </div>
-    </Styled.MyBlock>
+      </Styled.MyBlock>
+    </div>
   );
 }

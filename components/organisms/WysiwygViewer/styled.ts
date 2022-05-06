@@ -1,5 +1,11 @@
 import styled from "styled-components";
 
+export const PostTitle = styled.h1`
+  font-size: 38px;
+  font-weight: bold;
+  margin-bottom: 40px;
+`;
+
 export const MyBlock = styled.div`
   display: flex;
   & .RichEditor-root {
@@ -125,21 +131,6 @@ export const MyBlock = styled.div`
     & p {
       padding: 0;
       min-height: 16px;
-    }
-    & h1 {
-      font-size: 32px;
-    }
-    & h2 {
-      font-size: 24px;
-    }
-    & h3 {
-      font-size: 21px;
-    }
-    & h4 {
-      font-size: 18px;
-    }
-    & h5 {
-      font-size: 14px;
     }
     & ol {
       counter-reset: ol0;

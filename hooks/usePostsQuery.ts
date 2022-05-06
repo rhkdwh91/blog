@@ -59,67 +59,55 @@ export const usePostsQuery = () => {
       limit: 100,
     },
   });
-  const [PostCreate, { loading: createLoading, error: createError }] =
-    useMutation(POST_CREATE);
-  const [PostDelete, { loading: delLoading, error: delError }] =
-    useMutation(POST_DELETE);
-  const [PostEdit, { loading: editLoading, error: editError }] =
-    useMutation(POST_EDIT);
+  const [PostCreate] = useMutation(POST_CREATE, {
+    onCompleted: () => {
+      alert("게시글작성 완료했습니다");
+      router.push("/posts");
+    },
+    onError: (error) => {
+      alert(String(error));
+    },
+  });
+  const [PostDelete] = useMutation(POST_DELETE, {
+    onCompleted: () => {
+      alert("삭제완료했습니다");
+      router.push("/posts");
+    },
+    onError: (error) => {
+      alert(String(error));
+    },
+  });
+  const [PostEdit] = useMutation(POST_EDIT, {
+    onCompleted: () => {
+      alert("수정완료했습니다");
+      router.push("/posts");
+    },
+    onError: (error) => {
+      alert(String(error));
+    },
+  });
 
   const postCreate = async (payload: PostType) => {
-    try {
-      const { data } = await PostCreate({
-        variables: {
-          ...payload,
-        },
-      });
-      if (!createLoading) {
-        if (createError) {
-          throw createError;
-        }
-        alert(data.postCreate);
-        router.push("/posts");
-      }
-    } catch (err) {
-      alert(String(err));
-    }
+    await PostCreate({
+      variables: {
+        ...payload,
+      },
+    });
   };
 
   const postEdit = async (payload: PostUidType) => {
-    try {
-      const { data } = await PostEdit({
-        variables: {
-          ...payload,
-        },
-      });
-      if (!editLoading) {
-        if (editError) {
-          throw editError;
-        }
-        alert(data.postEdit);
-        router.push("/posts");
-      }
-    } catch (err) {
-      alert(String(err));
-    }
+    await PostEdit({
+      variables: {
+        ...payload,
+      },
+    });
   };
 
   const postDelete = async (uid: number) => {
-    try {
-      if (!confirm("삭제하겠습니까?")) {
-        return;
-      }
-      const { data } = await PostDelete({ variables: { uid } });
-      if (!delLoading) {
-        if (delError) {
-          throw delError;
-        }
-        alert(data.postDel);
-        router.push("/posts");
-      }
-    } catch (err) {
-      alert(String(err));
+    if (!confirm("삭제하겠습니까?")) {
+      return;
     }
+    await PostDelete({ variables: { uid } });
   };
 
   return {

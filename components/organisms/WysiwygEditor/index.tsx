@@ -19,6 +19,7 @@ import {
   styleMap,
   BLOCK_TYPES,
   INLINE_STYLES,
+  removeInlineStyles,
 } from "components/organisms/Wysiwyg/styleMap";
 
 import DOMPurify from "dompurify";
@@ -28,6 +29,7 @@ import {
   getBlockStyle,
   extendedBlockRenderMap,
 } from "components/organisms/Wysiwyg/CustomBlock";
+import { gql, useMutation } from "@apollo/client";
 
 const focusPlugin = createFocusPlugin();
 const resizeablePlugin = createResizeablePlugin();
@@ -122,12 +124,24 @@ interface IDraftEditor {
   data?: any;
 }
 
+const UPLOAD_FILE = gql`
+  mutation fileUpload($file: [Upload]!) {
+    fileUpload(file: $file) {
+      url
+    }
+  }
+`;
+
 export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
   const dispatch = useDispatch();
   const title = useSelector((state: State) => state.board.title);
   const content = useSelector((state: State) => state.board.content);
   const [isFontBoxOpen, setIsFontBoxOpen] = useState<boolean>(false);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [imgFile, setImgFile] = useState(null);
+  const [fileUpload] = useMutation(UPLOAD_FILE, {
+    onCompleted: (data) => console.log(data),
+  });
 
   const htmlToEditor = useCallback(() => {
     setEditorState(
@@ -135,6 +149,17 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
         convertFromRaw(JSON.parse(data.post.content))
       )
     );
+    dispatch({
+      type: CHANGE_CONTENT,
+      //data: editorToHtml(editorState),
+      data: JSON.stringify(
+        editorToHtml(
+          EditorState.createWithContent(
+            convertFromRaw(JSON.parse(data.post.content))
+          )
+        )
+      ),
+    });
   }, [data]);
 
   useEffect(() => {
@@ -207,7 +232,8 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
   };
 
   const toggleBlockType = (blockType) => {
-    setEditorState(RichUtils.toggleBlockType(editorState, blockType));
+    const newEditorState = removeInlineStyles(editorState);
+    setEditorState(RichUtils.toggleBlockType(newEditorState, blockType));
   };
 
   const toggleInlineStyle = (inlineStyle) => {
@@ -234,8 +260,7 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
     setEditorState(RichUtils.toggleLink(newEditorState, selection, entityKey));
   };
 
-  const handleInsertImage = () => {
-    const src = prompt("Please enter the URL of your picture");
+  const imageLoader = (src) => {
     if (!src) {
       return;
     }
@@ -253,6 +278,26 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
     return setEditorState(imagePlugin.addImage(newEditorState, src, {}));
   };
 
+  const handleInsertImage = () => {
+    const src = prompt("Please enter the URL of your picture");
+    imageLoader(src);
+  };
+
+  const handleFileInput = async (e: any) => {
+    setImgFile(e.target.files[0]);
+  };
+
+  const handleInsertS3Image = async () => {
+    console.log(imgFile);
+    if (!imgFile) return;
+    const result: any = await fileUpload({
+      variables: { file: [imgFile] },
+    });
+    console.log(result);
+    imageLoader(result?.data.fileUpload.url[0]);
+    setImgFile(null);
+  };
+
   const editor: any = useRef();
 
   const handleClickFontBox = () => {
@@ -260,9 +305,13 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
   };
 
   const toggleFontSize = (fontSize) => {
-    setEditorState(
-      RichUtils.toggleInlineStyle(editorState, `FONT_SIZE_${fontSize}`)
-    );
+    try {
+      setEditorState(
+        RichUtils.toggleInlineStyle(editorState, `FONT_SIZE_${fontSize}`)
+      );
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -311,6 +360,13 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
         >
           image
         </button>
+        <input
+          type="file"
+          name="file"
+          onChange={handleFileInput}
+          accept="image/gif,image/jpeg,image/png"
+        />
+        <button onClick={handleInsertS3Image}>S3 UPLOAD</button>
         <BlockStyleControls
           editorState={editorState}
           onToggle={toggleBlockType}

@@ -118,21 +118,6 @@ export const MyBlock = styled.div`
       padding: 0;
       min-height: 16px;
     }
-    & h1 {
-      font-size: 32px;
-    }
-    & h2 {
-      font-size: 24px;
-    }
-    & h3 {
-      font-size: 21px;
-    }
-    & h4 {
-      font-size: 18px;
-    }
-    & h5 {
-      font-size: 14px;
-    }
     & ol {
       counter-reset: ol0;
       > li {

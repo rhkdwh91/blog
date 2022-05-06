@@ -6,12 +6,10 @@ interface BlockComponentProps {
 }
 export const Image = (props: BlockComponentProps) => {
   const { block, contentState } = props;
-  console.log(block.getEntityAt(0));
   const { src } = contentState.getEntity(block.getEntityAt(0)).getData();
   return <img src={src} alt={src} role="presentation" />;
 };
 const Media = (props: BlockComponentProps) => {
-  console.log(props?.block?.getEntityAt(0));
   const entity = props.contentState.getEntity(props?.block?.getEntityAt(0));
   const type = entity.getType();
   let media: any = null;
