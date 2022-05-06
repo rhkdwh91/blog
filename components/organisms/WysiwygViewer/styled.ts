@@ -8,33 +8,14 @@ export const PostTitle = styled.h1`
 
 export const MyBlock = styled.div`
   display: flex;
+
   & .RichEditor-root {
+    position: absolute;
     background: #fff;
     border: 1px solid #ddd;
     font-family: "Georgia", serif;
     font-size: 14px;
     padding: 15px;
-  }
-
-  & .RichEditor-editor {
-    border-top: 1px solid #ddd;
-    cursor: text;
-    font-size: 16px;
-    margin-top: 10px;
-  }
-
-  & .RichEditor-editor .public-DraftEditorPlaceholder-root,
-  .RichEditor-editor .public-DraftEditor-content {
-    margin: 0 -15px -15px;
-    padding: 15px;
-  }
-
-  & .RichEditor-editor .public-DraftEditor-content {
-    min-height: 100px;
-  }
-
-  & .RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
-    display: none;
   }
 
   & .RichEditor-editor .RichEditor-blockquote {
@@ -46,11 +27,10 @@ export const MyBlock = styled.div`
     padding: 10px 20px;
   }
 
-  & .RichEditor-editor .public-DraftStyleDefault-pre {
-    background-color: rgba(0, 0, 0, 0.05);
-    font-family: "Inconsolata", "Menlo", "Consolas", monospace;
+  & .DraftEditor-root {
+    cursor: text;
     font-size: 16px;
-    padding: 20px;
+    margin-top: 10px;
   }
 
   & .public-DraftStyleDefault-pre {
@@ -59,27 +39,12 @@ export const MyBlock = styled.div`
     padding: 1px 10px;
     border-left: solid 4px #00dd6d;
     padding: 5px 20px;
+    & pre {
+      word-break: break-all;
+      white-space: break-spaces;
+    }
   }
 
-  & .RichEditor-controls {
-    font-family: "Helvetica", sans-serif;
-    font-size: 14px;
-    margin-bottom: 5px;
-    user-select: none;
-  }
-
-  & .RichEditor-styleButton {
-    color: #999;
-    cursor: pointer;
-    margin-right: 16px;
-    padding: 2px 0;
-    display: inline-block;
-  }
-
-  & .RichEditor-activeButton {
-    color: red;
-    font-weight: 700;
-  }
   > div {
     width: 100%;
     max-width: 700px;

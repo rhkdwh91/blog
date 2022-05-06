@@ -61,6 +61,15 @@ export const MyBlock = styled.div`
     padding: 15px;
   }
 
+  & .RichEditor-editor .RichEditor-blockquote {
+    border-left: 5px solid #eee;
+    color: #666;
+    font-family: "Hoefler Text", "Georgia", serif;
+    font-style: italic;
+    margin: 16px 0;
+    padding: 10px 20px;
+  }
+
   & .DraftEditor-root {
     cursor: text;
     font-size: 16px;
@@ -73,6 +82,10 @@ export const MyBlock = styled.div`
     padding: 1px 10px;
     border-left: solid 4px #00dd6d;
     padding: 5px 20px;
+    & pre {
+      word-break: break-all;
+      white-space: break-spaces;
+    }
   }
 
   > div {
