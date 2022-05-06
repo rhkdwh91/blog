@@ -29,7 +29,6 @@ import {
   BLOCK_TYPES,
   INLINE_STYLES,
   removeInlineStyles,
-  emptyContents,
 } from "constants/wysisygLib";
 
 const focusPlugin = createFocusPlugin();
