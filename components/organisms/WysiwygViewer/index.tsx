@@ -14,7 +14,7 @@ import createImagePlugin from "@draft-js-plugins/image";
 
 import createAlignmentPlugin from "@draft-js-plugins/alignment";
 //import { mediaBlockRenderer } from "components/organisms/WIsywyg/Media";
-import { styleMap } from "components/organisms/Wysiwyg/styleMap";
+import { styleMap } from "constants/wysisygLib";
 
 const focusPlugin = createFocusPlugin();
 const resizeablePlugin = createResizeablePlugin();

@@ -1,52 +1,9 @@
 import styled, { css } from "styled-components";
 
-export const FontBox = styled.div<{ isOpen: boolean }>(
-  ({ isOpen }) => css`
-    ${isOpen
-      ? css`
-          display: block;
-        `
-      : css`
-          display: none;
-        `}
-    background-color: #fff;
-  `
-);
-
-export const MyBlock = styled.div`
-  position: relative;
-  & .awlhfjh {
-    position: absolute;
-    display: flex;
-    transform: translate(-50%) scale(0);
-    > div {
-      margin: 0 2px;
-    }
-  }
-  & .RichEditor-root {
-    position: absolute;
-    background: #fff;
-    border: 1px solid #ddd;
-    font-family: "Georgia", serif;
-    font-size: 14px;
-    padding: 15px;
-  }
-
-  & .DraftEditor-root {
-    border-top: 1px solid #ddd;
-    cursor: text;
-    font-size: 16px;
-    margin-top: 10px;
-  }
-
-  & .public-DraftStyleDefault-pre {
-    background: #f1f1f1;
-    border-radius: 3px;
-    padding: 1px 10px;
-    border-left: solid 4px #00dd6d;
-    padding: 5px 20px;
-  }
-
+export const EditTool = styled.div`
+  background-color: #fff;
+  max-width: 700px;
+  margin: 0 auto;
   & .RichEditor-controls {
     font-family: "Helvetica", sans-serif;
     font-size: 14px;
@@ -66,9 +23,60 @@ export const MyBlock = styled.div`
     color: red;
     font-weight: 700;
   }
+`;
+
+export const FontBox = styled.div<{ isOpen: boolean }>(
+  ({ isOpen }) => css`
+    ${isOpen
+      ? css`
+          display: block;
+        `
+      : css`
+          display: none;
+        `}
+    background-color: #fff;
+  `
+);
+
+export const MyBlock = styled.div`
+  position: relative;
+  height: 600px;
+  overflow-y: auto;
+  width: 730px;
+  margin: 0 auto;
+  & .awlhfjh {
+    position: absolute;
+    display: flex;
+    transform: translate(-50%) scale(0);
+    > div {
+      margin: 0 2px;
+    }
+  }
+  & .RichEditor-root {
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ddd;
+    font-family: "Georgia", serif;
+    font-size: 14px;
+    padding: 15px;
+  }
+
+  & .DraftEditor-root {
+    cursor: text;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+  & .public-DraftStyleDefault-pre {
+    background: #f1f1f1;
+    border-radius: 3px;
+    padding: 1px 10px;
+    border-left: solid 4px #00dd6d;
+    padding: 5px 20px;
+  }
+
   > div {
     width: 100%;
-    max-width: 700px;
     position: relative;
     background-color: #fff;
     border: 0.0625rem solid #d7e2eb;
@@ -77,6 +85,7 @@ export const MyBlock = styled.div`
     padding: 1.5rem;
     width: 100%;
     max-width: 700px;
+    min-height: 600px;
     box-sizing: border-box;
     margin: 0 auto;
     margin-bottom: 4rem;

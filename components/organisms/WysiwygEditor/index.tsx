@@ -12,15 +12,9 @@ import createImagePlugin from "@draft-js-plugins/image";
 import createAlignmentPlugin from "@draft-js-plugins/alignment";
 
 import createBlockDndPlugin from "@draft-js-plugins/drag-n-drop";
+
 //import createDragNDropUploadPlugin from "@draft-js-plugins/drag-n-drop-upload";
 //import mockUpload from "components/organisms/Wysiwyg/mockUpload";
-
-import {
-  styleMap,
-  BLOCK_TYPES,
-  INLINE_STYLES,
-  removeInlineStyles,
-} from "components/organisms/Wysiwyg/styleMap";
 
 import DOMPurify from "dompurify";
 import * as Styled from "./styled";
@@ -30,6 +24,13 @@ import {
   extendedBlockRenderMap,
 } from "components/organisms/Wysiwyg/CustomBlock";
 import { gql, useMutation } from "@apollo/client";
+import {
+  styleMap,
+  BLOCK_TYPES,
+  INLINE_STYLES,
+  removeInlineStyles,
+  emptyContents,
+} from "constants/wysisygLib";
 
 const focusPlugin = createFocusPlugin();
 const resizeablePlugin = createResizeablePlugin();
@@ -314,15 +315,19 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
     }
   };
 
+  const handleFocus = () => {
+    editor?.current.editor.focus();
+  };
+
   return (
-    <Styled.MyBlock>
-      <div className="draft-editor-wrap">
-        <Styled.Title
-          type="string"
-          value={title}
-          onChange={handleChangeTitle}
-          placeholder="제목을 입력해주세요"
-        />
+    <div>
+      <Styled.Title
+        type="string"
+        value={title}
+        onChange={handleChangeTitle}
+        placeholder="제목을 입력해주세요"
+      />
+      <Styled.EditTool>
         <button onClick={handleClickFontBox}>FontSize</button>
         <Styled.FontBox isOpen={isFontBoxOpen}>
           {fontSize.map((size) => (
@@ -375,21 +380,25 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
           editorState={editorState}
           onToggle={toggleInlineStyle}
         />
-        <Editor
-          // 초기값 설정
-          editorState={editorState}
-          onChange={onEditorStateChange}
-          handleKeyCommand={handleKeyCommand}
-          blockStyleFn={getBlockStyle}
-          customStyleMap={styleMap}
-          blockRenderMap={extendedBlockRenderMap}
-          //blockRendererFn={mediaBlockRenderer}
-          plugins={plugins}
-          ref={editor}
-        />
-        <AlignmentTool />
-      </div>
+      </Styled.EditTool>
+      <Styled.MyBlock onClick={handleFocus}>
+        <div className="draft-editor-wrap">
+          <Editor
+            // 초기값 설정
+            editorState={editorState}
+            onChange={onEditorStateChange}
+            handleKeyCommand={handleKeyCommand}
+            blockStyleFn={getBlockStyle}
+            customStyleMap={styleMap}
+            blockRenderMap={extendedBlockRenderMap}
+            //blockRendererFn={mediaBlockRenderer}
+            plugins={plugins}
+            ref={editor}
+          />
+          <AlignmentTool />
+        </div>
+      </Styled.MyBlock>
       <button onClick={handleClickSave}>저장</button>
-    </Styled.MyBlock>
+    </div>
   );
 }
