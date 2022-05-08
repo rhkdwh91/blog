@@ -31,6 +31,7 @@ import {
   removeInlineStyles,
   PRESET_COLORS,
   PRESET_SIZES,
+  setInlineStyles,
 } from "constants/wysisygLib";
 
 const focusPlugin = createFocusPlugin();
@@ -300,10 +301,12 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
 
   const toggleFontSize = (fontSize) => {
     try {
-      const newEditorState = removeInlineStyles(editorState, "size");
-      setEditorState(
-        RichUtils.toggleInlineStyle(newEditorState, `FONT_SIZE_${fontSize}`)
+      const newEditorState = setInlineStyles(
+        RichUtils.toggleInlineStyle(editorState, `FONT_SIZE_${fontSize}`),
+        "size",
+        `FONT_SIZE_${fontSize}`
       );
+      setEditorState(newEditorState);
     } catch (e) {
       console.error(e);
     }
@@ -311,10 +314,12 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
 
   const toggleFontColor = (color) => {
     try {
-      const newEditorState = removeInlineStyles(editorState, "color");
-      setEditorState(
-        RichUtils.toggleInlineStyle(newEditorState, `FONT_COLOR_${color}`)
+      const newEditorState = setInlineStyles(
+        RichUtils.toggleInlineStyle(editorState, `FONT_COLOR_${color}`),
+        "color",
+        `FONT_COLOR_${color}`
       );
+      setEditorState(newEditorState);
     } catch (e) {
       console.error(e);
     }

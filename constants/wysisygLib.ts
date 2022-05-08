@@ -1,4 +1,4 @@
-import { Modifier, EditorState } from "draft-js";
+import { Modifier, EditorState, RichUtils } from "draft-js";
 
 export const BLOCK_TYPES = [
   { label: "H1", style: "HeaderOne" },
@@ -95,15 +95,49 @@ export const removeInlineStyles = (editorState, type: removeType = "all") => {
         ),
       contentState
     );
-    let newEditorState = EditorState.set(editorState, { allowUndo: false });
-    newEditorState = EditorState.push(
+    const removeEditorState = EditorState.push(
       editorState,
       contentWithoutStyles,
       "change-inline-style"
     );
-    newEditorState.set(editorState, { allowUndo: true });
+    return removeEditorState;
+  } catch (e) {
+    console.log(e);
+    return editorState;
+  }
+};
 
-    return newEditorState;
+export const setInlineStyles = (
+  editorState,
+  type: removeType = "all",
+  inlineStyle = ""
+) => {
+  try {
+    const styleMap = removeType(type);
+    const contentState = editorState.getCurrentContent();
+    const contentWithoutStyles = Object.keys(styleMap).reduce(
+      (newContentState, style) =>
+        style !== inlineStyle
+          ? Modifier.removeInlineStyle(
+              newContentState,
+              editorState.getSelection(),
+              style
+            )
+          : newContentState,
+      contentState
+    );
+    const disableUndoEditorState = EditorState.set(editorState, {
+      allowUndo: false,
+    });
+    const removeEditorState = EditorState.push(
+      disableUndoEditorState,
+      contentWithoutStyles,
+      "change-inline-style"
+    );
+    const allowUndoEditorState = EditorState.set(removeEditorState, {
+      allowUndo: true,
+    });
+    return allowUndoEditorState;
   } catch (e) {
     console.log(e);
     return editorState;
