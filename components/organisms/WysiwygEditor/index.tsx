@@ -29,6 +29,8 @@ import {
   BLOCK_TYPES,
   INLINE_STYLES,
   removeInlineStyles,
+  PRESET_COLORS,
+  PRESET_SIZES,
 } from "constants/wysisygLib";
 
 const focusPlugin = createFocusPlugin();
@@ -115,8 +117,6 @@ const InlineStyleControls = ({ editorState, onToggle }) => {
     </div>
   );
 };
-
-const fontSize = [30, 28, 26, 24, 22, 20, 18, 16, 14, 12];
 
 interface IDraftEditor {
   postAction: (payload) => Promise<void>;
@@ -314,6 +314,16 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
     }
   };
 
+  const toggleFontColor = (color) => {
+    try {
+      setEditorState(
+        RichUtils.toggleInlineStyle(editorState, `FONT_COLOR_${color}`)
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const handleFocus = () => {
     editor?.current.editor.focus();
   };
@@ -327,13 +337,24 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
         placeholder="제목을 입력해주세요"
       />
       <Styled.EditTool>
-        <button onClick={handleClickFontBox}>FontSize</button>
+        <button onClick={handleClickFontBox}>FONT BOX</button>
         <Styled.FontBox isOpen={isFontBoxOpen}>
-          {fontSize.map((size) => (
-            <button key={size} onClick={() => toggleFontSize(size)}>
-              font {size}
-            </button>
-          ))}
+          <div>
+            {PRESET_SIZES.map((size) => (
+              <button key={size} onClick={() => toggleFontSize(size)}>
+                font {size}
+              </button>
+            ))}
+          </div>
+          <div>
+            {PRESET_COLORS.map((color) => (
+              <Styled.FontColorButton
+                key={color}
+                color={color}
+                onClick={() => toggleFontColor(color)}
+              />
+            ))}
+          </div>
         </Styled.FontBox>
         <button
           disabled={editorState.getUndoStack().size <= 0}

@@ -1,5 +1,14 @@
 import styled, { css } from "styled-components";
 
+export const FontColorButton = styled.button<{ color: string }>(
+  ({ color }) => css`
+    width: 30px;
+    height: 30px;
+    margin: 10px;
+    background-color: #${color};
+  `
+);
+
 export const EditTool = styled.div`
   background-color: #fff;
   max-width: 700px;

@@ -159,6 +159,62 @@ export const emptyContents = {
   entityMap: {},
 };
 
+export const BLOCK_TYPES = [
+  { label: "H1", style: "HeaderOne" },
+  { label: "H2", style: "HeaderTwo" },
+  { label: "H3", style: "HeaderThree" },
+  { label: "Blockquote", style: "blockquote" },
+  { label: "UL", style: "unordered-list-item" },
+  { label: "OL", style: "ordered-list-item" },
+  { label: "Code Block", style: "code-block" },
+  { label: "Fire", style: "new-block-type-name" },
+];
+
+export const INLINE_STYLES = [
+  { label: "Bold", style: "BOLD" },
+  { label: "Italic", style: "ITALIC" },
+  { label: "Underline", style: "UNDERLINE" },
+  { label: "Monospace", style: "CODE" },
+];
+
+export const PRESET_SIZES = [30, 28, 26, 24, 22, 20, 18, 16, 14, 12];
+
+const fontSizeStyleMap = PRESET_SIZES.reduce((pre, cur) => {
+  return {
+    ...pre,
+    [`FONT_SIZE_${cur}`]: {
+      fontSize: cur,
+    },
+  };
+}, {});
+
+export const PRESET_COLORS = [
+  "FF00AA",
+  "F5A623",
+  "F8E71C",
+  "8B572A",
+  "7ED321",
+  "417505",
+  "BD10E0",
+  "9013FE",
+  "4A90E2",
+  "50E3C2",
+  "B8E986",
+  "000000",
+  "4A4A4A",
+  "9B9B9B",
+  "FFFFFF",
+];
+
+const fontColorStyleMap = PRESET_COLORS.reduce((pre, cur) => {
+  return {
+    ...pre,
+    [`FONT_COLOR_${cur}`]: {
+      color: `#${cur}`,
+    },
+  };
+}, {});
+
 export const styleMap = {
   CODE: {
     backgroundColor: "rgba(0, 0, 0, 0.05)",
@@ -166,36 +222,8 @@ export const styleMap = {
     fontSize: 16,
     padding: 2,
   },
-  FONT_SIZE_30: {
-    fontSize: 30,
-  },
-  FONT_SIZE_28: {
-    fontSize: 28,
-  },
-  FONT_SIZE_26: {
-    fontSize: 26,
-  },
-  FONT_SIZE_24: {
-    fontSize: 24,
-  },
-  FONT_SIZE_22: {
-    fontSize: 22,
-  },
-  FONT_SIZE_20: {
-    fontSize: 20,
-  },
-  FONT_SIZE_18: {
-    fontSize: 18,
-  },
-  FONT_SIZE_16: {
-    fontSize: 16,
-  },
-  FONT_SIZE_14: {
-    fontSize: 14,
-  },
-  FONT_SIZE_12: {
-    fontSize: 12,
-  },
+  ...fontSizeStyleMap,
+  ...fontColorStyleMap,
 };
 
 export const removeInlineStyles = (editorState) => {
@@ -222,21 +250,3 @@ export const removeInlineStyles = (editorState) => {
     return editorState;
   }
 };
-
-export const BLOCK_TYPES = [
-  { label: "H1", style: "HeaderOne" },
-  { label: "H2", style: "HeaderTwo" },
-  { label: "H3", style: "HeaderThree" },
-  { label: "Blockquote", style: "blockquote" },
-  { label: "UL", style: "unordered-list-item" },
-  { label: "OL", style: "ordered-list-item" },
-  { label: "Code Block", style: "code-block" },
-  { label: "Fire", style: "new-block-type-name" },
-];
-
-export const INLINE_STYLES = [
-  { label: "Bold", style: "BOLD" },
-  { label: "Italic", style: "ITALIC" },
-  { label: "Underline", style: "UNDERLINE" },
-  { label: "Monospace", style: "CODE" },
-];
