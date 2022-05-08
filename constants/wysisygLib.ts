@@ -254,11 +254,13 @@ export const removeInlineStyles = (editorState, type: removeType = "all") => {
         ),
       contentState
     );
-    const newEditorState = EditorState.push(
+    let newEditorState = EditorState.set(editorState, { allowUndo: false });
+    newEditorState = EditorState.push(
       editorState,
       contentWithoutStyles,
       "change-inline-style"
     );
+    newEditorState.set(editorState, { allowUndo: true });
 
     return newEditorState;
   } catch (e) {
