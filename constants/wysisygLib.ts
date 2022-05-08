@@ -226,8 +226,24 @@ export const styleMap = {
   ...fontColorStyleMap,
 };
 
-export const removeInlineStyles = (editorState) => {
+export type removeType = "all" | "color" | "size";
+
+const removeType = (type: removeType) => {
+  if (type === "all") {
+    return styleMap;
+  }
+  if (type === "color") {
+    return fontColorStyleMap;
+  }
+  if (type === "size") {
+    return fontSizeStyleMap;
+  }
+  return styleMap;
+};
+
+export const removeInlineStyles = (editorState, type: removeType = "all") => {
   try {
+    const styleMap = removeType(type);
     const contentState = editorState.getCurrentContent();
     const contentWithoutStyles = Object.keys(styleMap).reduce(
       (newContentState, style) =>
@@ -238,7 +254,6 @@ export const removeInlineStyles = (editorState) => {
         ),
       contentState
     );
-
     const newEditorState = EditorState.push(
       editorState,
       contentWithoutStyles,
@@ -246,7 +261,8 @@ export const removeInlineStyles = (editorState) => {
     );
 
     return newEditorState;
-  } catch {
+  } catch (e) {
+    console.log(e);
     return editorState;
   }
 };

@@ -135,7 +135,6 @@ const UPLOAD_FILE = gql`
 export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
   const dispatch = useDispatch();
   const title = useSelector((state: State) => state.board.title);
-  const content = useSelector((state: State) => state.board.content);
   const [isFontBoxOpen, setIsFontBoxOpen] = useState<boolean>(false);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [imgFile, setImgFile] = useState(null);
@@ -193,11 +192,6 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
     (editorState) => {
       setEditorState(editorState);
       // 리덕스 changeField
-      dispatch({
-        type: CHANGE_CONTENT,
-        //data: editorToHtml(editorState),
-        data: JSON.stringify(editorToHtml(editorState)),
-      });
     },
     [editorState]
   );
@@ -207,13 +201,13 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
       ? postAction({
           uid: Number(uid),
           title,
-          content,
+          content: JSON.stringify(editorToHtml(editorState)),
         })
       : postAction({
           title,
-          content,
+          content: JSON.stringify(editorToHtml(editorState)),
         });
-  }, [title, content]);
+  }, [title, editorState]);
 
   /*
   const uploadCallback = (file) => {
@@ -306,8 +300,9 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
 
   const toggleFontSize = (fontSize) => {
     try {
+      const newEditorState = removeInlineStyles(editorState, "size");
       setEditorState(
-        RichUtils.toggleInlineStyle(editorState, `FONT_SIZE_${fontSize}`)
+        RichUtils.toggleInlineStyle(newEditorState, `FONT_SIZE_${fontSize}`)
       );
     } catch (e) {
       console.error(e);
@@ -316,8 +311,9 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
 
   const toggleFontColor = (color) => {
     try {
+      const newEditorState = removeInlineStyles(editorState, "color");
       setEditorState(
-        RichUtils.toggleInlineStyle(editorState, `FONT_COLOR_${color}`)
+        RichUtils.toggleInlineStyle(newEditorState, `FONT_COLOR_${color}`)
       );
     } catch (e) {
       console.error(e);
