@@ -1,4 +1,4 @@
-import { Modifier, EditorState, RichUtils } from "draft-js";
+import { Modifier, EditorState } from "draft-js";
 
 export const BLOCK_TYPES = [
   { label: "H1", style: "HeaderOne" },
