@@ -4,6 +4,19 @@ interface BlockComponentProps {
   contentState: ContentState;
   block: ContentBlock;
 }
+const Video = (props) => {
+  return (
+    <figure>
+      <iframe
+        src={props.src}
+        width="100%"
+        height="411px"
+        allowFullScreen
+        frameBorder="0"
+      />
+    </figure>
+  );
+};
 export const Image = (props: BlockComponentProps) => {
   const { block, contentState } = props;
   const { src } = contentState.getEntity(block.getEntityAt(0)).getData();
@@ -16,7 +29,7 @@ const Media = (props: BlockComponentProps) => {
   if (type === "image") {
     media = <Image {...props} />;
   }
-  return media;
+  if (type === "video") return (media = <Video {...props} />);
 };
 export const mediaBlockRenderer = (block: ContentBlock) => {
   if (block.getType() === "atomic") {

@@ -12,6 +12,7 @@ import createImagePlugin from "@draft-js-plugins/image";
 import createAlignmentPlugin from "@draft-js-plugins/alignment";
 
 import createBlockDndPlugin from "@draft-js-plugins/drag-n-drop";
+import createVideoPlugin from "@draft-js-plugins/video";
 
 //import createDragNDropUploadPlugin from "@draft-js-plugins/drag-n-drop-upload";
 //import mockUpload from "components/organisms/Wysiwyg/mockUpload";
@@ -34,6 +35,8 @@ import {
   setInlineStyles,
 } from "constants/wysisygLib";
 
+import VideoAdd, { blockRendererFn } from "../Wysiwyg/VideoAdd";
+
 const focusPlugin = createFocusPlugin();
 const resizeablePlugin = createResizeablePlugin();
 const blockDndPlugin = createBlockDndPlugin();
@@ -47,6 +50,7 @@ const decorator = composeDecorators(
   blockDndPlugin.decorator
 );
 const imagePlugin = createImagePlugin({ decorator });
+const videoPlugin = createVideoPlugin();
 
 /*
 const dragNDropFileUploadPlugin = createDragNDropUploadPlugin({
@@ -61,6 +65,7 @@ const plugins = [
   resizeablePlugin,
   imagePlugin,
   alignmentPlugin,
+  videoPlugin,
 ];
 
 const StyleButton = ({ style, onToggle, active, label }) => {
@@ -393,6 +398,11 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
           accept="image/gif,image/jpeg,image/png"
         />
         <button onClick={handleInsertS3Image}>S3 UPLOAD</button>
+        <VideoAdd
+          editorState={editorState}
+          onChange={onEditorStateChange}
+          modifier={videoPlugin.addVideo}
+        />
         <BlockStyleControls
           editorState={editorState}
           onToggle={toggleBlockType}
@@ -412,7 +422,7 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
             blockStyleFn={getBlockStyle}
             customStyleMap={styleMap}
             blockRenderMap={extendedBlockRenderMap}
-            //blockRendererFn={mediaBlockRenderer}
+            blockRendererFn={blockRendererFn}
             plugins={plugins}
             ref={editor}
           />

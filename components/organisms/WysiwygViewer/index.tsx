@@ -13,8 +13,10 @@ import createFocusPlugin from "@draft-js-plugins/focus";
 import createImagePlugin from "@draft-js-plugins/image";
 
 import createAlignmentPlugin from "@draft-js-plugins/alignment";
+import createVideoPlugin from "@draft-js-plugins/video";
 //import { mediaBlockRenderer } from "components/organisms/WIsywyg/Media";
 import { styleMap } from "constants/wysisygLib";
+import { blockRendererFn } from "../Wysiwyg/VideoAdd";
 
 const focusPlugin = createFocusPlugin();
 const resizeablePlugin = createResizeablePlugin();
@@ -27,8 +29,15 @@ const decorator = composeDecorators(
   alignmentPlugin.decorator
 );
 const imagePlugin = createImagePlugin({ decorator });
+const videoPlugin = createVideoPlugin();
 
-const plugins = [focusPlugin, resizeablePlugin, imagePlugin, alignmentPlugin];
+const plugins = [
+  focusPlugin,
+  resizeablePlugin,
+  imagePlugin,
+  alignmentPlugin,
+  videoPlugin,
+];
 
 interface IDraftEditor {
   title?: string;
@@ -54,7 +63,7 @@ export default function WysiwygEditor({ title, content }: IDraftEditor) {
           blockStyleFn={getBlockStyle}
           blockRenderMap={extendedBlockRenderMap}
           customStyleMap={styleMap}
-          //blockRendererFn={mediaBlockRenderer}
+          blockRendererFn={blockRendererFn}
           plugins={plugins}
           onChange={() => {}}
           handleKeyCommand={() => "not-handled"}
