@@ -69,9 +69,8 @@ interface BlockComponentProps {
 const Media = (props: BlockComponentProps) => {
   const entity = props.contentState.getEntity(props?.block?.getEntityAt(0));
   const type = entity.getType();
-  let media: any = null;
   if (type === "video" || entity.getData().type === "custom-video-type-k") {
-    media = <DefaultVideoCompoent {...props} />;
+    return <DefaultVideoCompoent {...props} />;
   }
 };
 
