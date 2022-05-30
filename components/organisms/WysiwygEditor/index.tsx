@@ -398,11 +398,7 @@ export default function WysiwygEditor({ postAction, uid, data }: IDraftEditor) {
           accept="image/gif,image/jpeg,image/png"
         />
         <button onClick={handleInsertS3Image}>S3 UPLOAD</button>
-        <VideoAdd
-          editorState={editorState}
-          onChange={onEditorStateChange}
-          modifier={videoPlugin.addVideo}
-        />
+        <VideoAdd editorState={editorState} onChange={onEditorStateChange} />
         <BlockStyleControls
           editorState={editorState}
           onToggle={toggleBlockType}
