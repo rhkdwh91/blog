@@ -44,9 +44,22 @@ interface IDraftEditor {
   content?: any;
 }
 
+function WisiwigNavi({ blocks }) {
+  return (
+    <Styled.WingNavWrap>
+      <Styled.WingNav>
+        {blocks?.map((nav, i) => (
+          <li key={i}>{nav.text}</li>
+        ))}
+      </Styled.WingNav>
+    </Styled.WingNavWrap>
+  );
+}
+
 export default function WysiwygEditor({ title, content }: IDraftEditor) {
   const [state, setState] = useState(EditorState.createEmpty());
   useEffect(() => {
+    console.log(JSON.parse(content)?.blocks);
     if (content) {
       setState(
         EditorState.createWithContent(convertFromRaw(JSON.parse(content)))
@@ -54,7 +67,7 @@ export default function WysiwygEditor({ title, content }: IDraftEditor) {
     }
   }, []);
   return (
-    <div>
+    <Styled.Wrap>
       <Styled.PostTitle>{title}</Styled.PostTitle>
       <Styled.MyBlock>
         <Editor
@@ -69,6 +82,11 @@ export default function WysiwygEditor({ title, content }: IDraftEditor) {
           handleKeyCommand={() => "not-handled"}
         />
       </Styled.MyBlock>
-    </div>
+      <WisiwigNavi
+        blocks={JSON.parse(content)?.blocks?.filter(
+          (block) => block?.type === "HeaderOne"
+        )}
+      />
+    </Styled.Wrap>
   );
 }

@@ -1,5 +1,31 @@
 import styled from "styled-components";
 
+export const Wrap = styled.div`
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+`;
+
+export const WingNavWrap = styled.div`
+  position: absolute;
+  right: -20px;
+`;
+
+export const WingNav = styled.ul`
+  position: fixed;
+  top: 200px;
+  border-left: solid 3px rgb(0, 221, 109);
+  text-align: left;
+  > li {
+    margin: 0 0 20px 10px;
+    font-size: 20px;
+    cursor: pointer;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+`;
+
 export const PostTitle = styled.h1`
   font-size: 38px;
   font-weight: bold;
