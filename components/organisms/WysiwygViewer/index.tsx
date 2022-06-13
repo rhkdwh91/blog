@@ -59,7 +59,6 @@ function WisiwigNavi({ blocks }) {
 export default function WysiwygEditor({ title, content }: IDraftEditor) {
   const [state, setState] = useState(EditorState.createEmpty());
   useEffect(() => {
-    console.log(JSON.parse(content)?.blocks);
     if (content) {
       setState(
         EditorState.createWithContent(convertFromRaw(JSON.parse(content)))
